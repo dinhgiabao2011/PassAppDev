@@ -47,12 +47,18 @@ namespace PassAppDev.Data
 				LockoutEnabled = false,
 				PhoneNumber = "1234567890",
 				PasswordHash = passwordHasher.HashPassword(null, "Admin@123")
+			},
+      storeOwner = new ApplicationUser()
+			{
+				Id = "a0554bfd-1d4d-4a61-97d4-d827530e6883",
+				UserName = "store@gmail.com",
+				Email = "store@gmail.com",
+				LockoutEnabled = false,
+				PhoneNumber = "1234567890",
+				PasswordHash = passwordHasher.HashPassword(null, "Store@123")
 			};
-
-
-			//passwordHasher.HashPassword(user, "Admin@123");
-
 			builder.Entity<ApplicationUser>().HasData(user);
+			builder.Entity<ApplicationUser>().HasData(storeOwner);
 
 		}
 
@@ -61,6 +67,9 @@ namespace PassAppDev.Data
       builder.Entity<IdentityUserRole<string>>().HasData(
           new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" }
           );
-    }
+			builder.Entity<IdentityUserRole<string>>().HasData(
+					new IdentityUserRole<string>() { RoleId = "c7b013f0-5201-4317-abd8-c211f91b7330", UserId = "a0554bfd-1d4d-4a61-97d4-d827530e6883" }
+					);
+		}
   }
 }
