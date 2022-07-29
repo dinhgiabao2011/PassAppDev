@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PassAppDev.Data;
 using PassAppDev.Models;
+using PassAppDev.Utils;
 using PassAppDev.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PassAppDev.Controllers
 {
-    public class BooksController : Controller
+  [Authorize(Roles = Role.STOREOWNER)]
+  public class BooksController : Controller
     {
         private ApplicationDbContext _context;
-        public BooksController(ApplicationDbContext context)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public BooksController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-        }
+      _userManager = userManager;
+    }
 
         [HttpGet]
         public IActionResult Index(string category)
