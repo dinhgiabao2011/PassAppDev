@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassAppDev.Data;
 
 namespace PassAppDev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220729121347_AddAdminAccount")]
+    partial class AddAdminAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,14 +254,13 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6c090913-d178-47d5-89f7-dc2e4c0a08be",
+                            ConcurrencyStamp = "40dc7ce6-069e-4829-af35-c86f7da3a14f",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEGVJ1Xq8yyHEJIR+4yfRel2fR5/ZeVW0QojtwcCExa5T7Bz0ceLaimNqia6CwVGGdw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ec25f12b-4764-4c7e-b851-de039ac79e52",
+                            SecurityStamp = "846a0a78-d8d5-495a-a4cc-2b130f013022",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });

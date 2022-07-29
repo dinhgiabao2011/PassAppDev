@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PassAppDev.Data;
 using PassAppDev.Models;
+using PassAppDev.Utils;
+
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PassAppDev.Controllers
 {
-    public class CategoriesController : Controller
+  [Authorize(Roles = Role.ADMIN)]
+  public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public CategoriesController(ApplicationDbContext context)
+    private readonly UserManager<ApplicationUser> _userManager;
+        public CategoriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
            
         }
         [HttpGet]
