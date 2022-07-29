@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using PassAppDev.Data;
+using PassAppDev.Models;
 
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,9 @@ namespace PassAppDev
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
 							Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-					.AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddRoles<IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>();
 			services.AddControllersWithViews();
 			services.AddRazorPages();
 		}
