@@ -14,5 +14,7 @@ namespace PassAppDev.Models
 		public Book Book { get; set; }
 
 		public int Quatity { get; set; }
+
+		public float Price { get; set; }
 	}
 }
