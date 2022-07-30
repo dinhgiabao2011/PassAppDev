@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
+using PassAppDev.Data;
 using PassAppDev.Models;
 
 using System;
@@ -13,16 +14,20 @@ namespace PassAppDev.Controllers
 {
 	public class HomeController : Controller
 	{
+		private ApplicationDbContext _context;
 		private readonly ILogger<HomeController> _logger;
 
-		public HomeController(ILogger<HomeController> logger)
+		public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
 		{
+			_context = context;
 			_logger = logger;
 		}
-
 		public IActionResult Index()
 		{
-			return View();
+			IEnumerable<Book> books = _context.Books
+				.Include(t => t.Category)
+				.ToList();
+			return View(books);
 		}
 
 		public IActionResult Privacy()
