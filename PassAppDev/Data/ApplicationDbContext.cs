@@ -31,8 +31,9 @@ namespace PassAppDev.Data
     {
       builder.Entity<IdentityRole>().HasData(
           new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = Role.ADMIN, ConcurrencyStamp = "1", NormalizedName = Role.ADMIN },
-          new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = Role.STOREOWNER, ConcurrencyStamp = "2", NormalizedName = Role.STOREOWNER }
-          );
+          new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = Role.STOREOWNER, ConcurrencyStamp = "2", NormalizedName = Role.STOREOWNER },
+					new IdentityRole() { Id = "e644b1a2-248f-4479-a7df-596aaebb9766", Name = Role.CUSTOMER, ConcurrencyStamp = "3", NormalizedName = Role.CUSTOMER }
+					);
 
     }
 
