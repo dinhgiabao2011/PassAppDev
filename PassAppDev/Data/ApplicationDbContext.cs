@@ -6,6 +6,7 @@ using PassAppDev.Utils;
 
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace PassAppDev.Data
@@ -18,14 +19,17 @@ namespace PassAppDev.Data
 		}
     public DbSet<Category> Categories { get; set; }
 		public DbSet<Book> Books { get; set; }
+		public DbSet<CartBook> CartBooks { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+
+		protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
       this.SeedRoles(builder);
       this.SeedUsers(builder);
-      this.SeedUserRoles(builder);
-    }
+			this.SeedUserRoles(builder);
+			builder.Entity<CartBook>().HasKey(t => new { t.ApplicationUserId, t.BookId });
+		}
 
     private void SeedRoles(ModelBuilder builder)
     {
