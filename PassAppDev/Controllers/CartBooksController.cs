@@ -61,7 +61,7 @@ namespace PassAppDev.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            //var currentUserId = _userManager.GetUserId(HttpContext.User);
+            
             var bookInCart = await _context.CartBooks.SingleOrDefaultAsync(t=>t.Id==id);
             if (bookInCart == null)
             {
@@ -73,6 +73,6 @@ namespace PassAppDev.Controllers
             return RedirectToAction("Index");
         }
 
-
+        
     }
 }

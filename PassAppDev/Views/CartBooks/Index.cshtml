@@ -4,7 +4,7 @@
 @model IEnumerable<PassAppDev.Models.CartBook>
 
 <h1>Shopping Cart</h1>
-<form asp-controller="CartBooks" asp-action="Order" method="post">
+
 <table class="table">
   <thead>
     <tr>
@@ -35,4 +35,6 @@
   }
   </tbody>
 </table>
-</form>
+<a asp-controller="Orders" asp-action="Order" class="btn btn-success"> 
+   Confirm Order
+</a>

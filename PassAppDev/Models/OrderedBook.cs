@@ -11,7 +11,7 @@ namespace PassAppDev.Models
         public int BookId { get; set; }
         public Book Book { get; set; }
         public int Quantity { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
 
     }
 }
