@@ -67,7 +67,6 @@ namespace PassAppDev.Controllers
                 Author = viewModel.Book.Author,
                 Price = viewModel.Book.Price,
                 Description = viewModel.Book.Description,
-                Quantity = viewModel.Book.Quantity,
                 CategoryId = viewModel.Book.CategoryId
             };
 
@@ -130,7 +129,6 @@ namespace PassAppDev.Controllers
             bookInDb.Author = viewModel.Book.Author;
             bookInDb.Price = viewModel.Book.Price;
             bookInDb.Description = viewModel.Book.Description;
-            bookInDb.Quantity = viewModel.Book.Quantity;
             bookInDb.CategoryId = viewModel.Book.CategoryId;
 
             _context.SaveChanges();
