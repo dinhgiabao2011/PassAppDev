@@ -28,7 +28,6 @@ namespace PassAppDev.Data
       this.SeedRoles(builder);
       this.SeedUsers(builder);
 			this.SeedUserRoles(builder);
-			builder.Entity<CartBook>().HasKey(t => new { t.ApplicationUserId, t.BookId });
 		}
 
     private void SeedRoles(ModelBuilder builder)
