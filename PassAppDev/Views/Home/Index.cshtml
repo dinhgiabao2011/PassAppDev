@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<PassAppDev.Models.Book>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,4 +10,22 @@
     <a asp-controller="Books" asp-action="Index" class="btn btn-info"> 
           Manage Books
     </a>
+
+
 </div>
+
+@foreach (var item in Model)
+{
+<div class="card" style="width:200px">
+  <img 
+    class="card-img-top" 
+    src="https://upload.wikimedia.org/wikipedia/commons/6/67/Microsoft_To-Do_icon.png" 
+    alt="Todo image">
+  <div class="card-body">
+    <h4 class="card-title">@item.Title</h4>
+    <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info"> 
+          Add to Cart
+    </a>
+  </div>
+</div>
+}

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model IEnumerable<PassAppDev.Models.CartBook>
+<h1>Shopping Cart</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Book ID</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model){
+      <tr>
+      <th scope="row">@item.ApplicationUserId</th>
+      <td>@item.BookId</td>
+      <td>@item.Price</td>
+      <td>@item.Quatity</td>
+      <td>
+      </td>
+    </tr>
+  }
+
+  </tbody>
+</table>
