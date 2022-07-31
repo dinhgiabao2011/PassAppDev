@@ -5,25 +5,25 @@
 <table class="table">
   <tbody>
   @foreach (var item in Model){
-      <tr>
+    <tr>
        <td>
     @if (item.Decision == "APPROVED")
     {
       <partial class="alert alert-info">  
-        Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
-                    </partial>
+        Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
+      </partial>
     }
     else
     {
       <partial class="alert alert-danger">  
-        Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
-                    </partial>      
+        Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
+      </partial>      
     }
-    <partial>
+      <partial>
         @item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()
-    </partial>
-    </td>
-  </tr>
+      </partial>
+      </td>
+    </tr>
   }
   </tbody>
 </table>
