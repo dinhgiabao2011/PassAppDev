@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PassAppDev.Data;
 using PassAppDev.Models;
+using PassAppDev.Utils;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassAppDev.Controllers
 {
-    public class OrdersController : Controller
+  [Authorize(Roles = Role.CUSTOMER)]
+  public class OrdersController : Controller
     {
         private ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,8 +24,10 @@ namespace PassAppDev.Controllers
         }
         public IActionResult Index()
         {
+            var currentUserId = _userManager.GetUserId(HttpContext.User);
             IEnumerable<Order> orders = _context.Orders
-                .Include(t => t.ApplicationUser)
+                .Where(t => t.ApplicationUserId == currentUserId)
+                .Include(t=>t.ApplicationUser)
                 .ToList();
             return View(orders);
         }
@@ -50,7 +56,7 @@ namespace PassAppDev.Controllers
                     OrderId = orderInDb.Id,
                     BookId = item.BookId,
                     Quantity = item.Quatity,
-                    Price = item.Price,
+                    Price = item.Price
                 };
                 booksInOrder.Add(newOrderedBook);
             }
