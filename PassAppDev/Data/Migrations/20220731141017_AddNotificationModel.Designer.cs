@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassAppDev.Data;
 
 namespace PassAppDev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731141017_AddNotificationModel")]
+    partial class AddNotificationModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,14 +266,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bccceaca-c3e4-4b71-b449-a97f4c6f9176",
+                            ConcurrencyStamp = "7175c261-5242-4f48-909b-b7cbf35d9ae0",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKSnqH8a0mMz+OBU+MV4+cn+bjpMkUolAjFuTUHC7CWDVaUcHdVVaL2OGgm4PrDQzA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKLOezrJ0fEEjzWCRGY9uvQMz1NbtUgmwQB882Kqth231cOJ9pR4cVRFCn6WvD/uzg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8a7b0ef4-6782-403c-89ea-65029565c605",
+                            SecurityStamp = "d84938e1-141c-4598-8b4d-810958691357",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         },
@@ -279,14 +281,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "a0554bfd-1d4d-4a61-97d4-d827530e6883",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cc3a32ca-6859-4914-a575-c1d1754f50ff",
+                            ConcurrencyStamp = "29deacf2-61bd-4bdc-8f7a-a9d20bf4fb8c",
                             Email = "store@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEEwR+EE4msog/kWVJ6wu61VXPkKUk18uGZKOMKulZp6t7oZAJkXHwe5gnzyb+fAfkg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDmQ4dIR4HxicL7z6c9wgAd1rpuy8E/+dJzCfFXbtu5h7LDAKJr8RWn0XinmAhzTww==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c37c4209-1220-464a-ac0c-5e8981097d04",
+                            SecurityStamp = "f82d59a6-2fd1-4e29-bb8f-9092f7421412",
                             TwoFactorEnabled = false,
                             UserName = "store@gmail.com"
                         });
@@ -393,19 +395,16 @@ namespace PassAppDev.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CategoryName")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Decision")
+                    b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("NotifiedAt")

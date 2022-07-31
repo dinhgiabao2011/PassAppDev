@@ -43,17 +43,26 @@ namespace PassAppDev.Controllers
 			{
 				return NotFound();
 			}
-			if(categoryInDb.OldName=="")
+			var notification = new Notification()
 			{
+				ApplicationUserId = categoryInDb.ApplicationUserId,
+				CategoryId = categoryInDb.Id,
+				CategoryName = categoryInDb.Name,
+				Decision = "REJECTED"
+			};
+			if (categoryInDb.OldName == null)
+			{
+				notification.Action = "ADDING";
 				_context.Categories.Remove(categoryInDb);
 			}
 			else
 			{
+				notification.Action = "EDITTING";
 				categoryInDb.Name = categoryInDb.OldName;
-				categoryInDb.OldName = "";
+				categoryInDb.OldName = null;
 				categoryInDb.Status = Enums.CategoryStatus.Approved;
 			}
-			
+			_context.Add(notification);
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
@@ -68,13 +77,30 @@ namespace PassAppDev.Controllers
 			{
 				return NotFound();
 			}
-			categoryInDb.Status = Enums.CategoryStatus.Approved;
+            var notification = new Notification()
+            {
+                ApplicationUserId = categoryInDb.ApplicationUserId,
+                CategoryId = categoryInDb.Id,
+                CategoryName = categoryInDb.Name,
+				Decision = "APPROVED"
+            };
+			if (categoryInDb.OldName == null)
+            {
+				notification.Action = "ADDING";
+            }
+            else
+            {
+				notification.Action = "EDITTING";
+			}
+            categoryInDb.Status = Enums.CategoryStatus.Approved;
+			categoryInDb.OldName = null;
+			_context.Add(notification);
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
-		public IActionResult ApprovedCategories(int id)
+		public IActionResult ApprovedCategories()
 		{
 			IEnumerable<Category> categories = _context.Categories
 				.Where(t => t.Status == Enums.CategoryStatus.Approved)

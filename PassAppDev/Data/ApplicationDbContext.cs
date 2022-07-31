@@ -22,7 +22,7 @@ namespace PassAppDev.Data
 		public DbSet<CartBook> CartBooks { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderedBook> OrderedBooks { get; set; }
-
+		public DbSet<Notification> Notifications { get; set; }
 		protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);

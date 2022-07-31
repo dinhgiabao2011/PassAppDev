@@ -13,11 +13,11 @@ using System.Linq;
 namespace PassAppDev.Controllers
 {
 
-  [Authorize(Roles = Role.STOREOWNER)]
-  public class CategoriesController : Controller
-    {
+    [Authorize(Roles = Role.STOREOWNER)]
+    public class CategoriesController : Controller
+        {
         private readonly ApplicationDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         public CategoriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -38,13 +38,13 @@ namespace PassAppDev.Controllers
             return View();
         }
 
-    public IActionResult Create(Category category)
+        public IActionResult Create(Category category)
         {
-      var currentUserId = _userManager.GetUserId(HttpContext.User);
-      if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            var currentUserId = _userManager.GetUserId(HttpContext.User);
+            if (!ModelState.IsValid)
+                {
+                    return View();
+                }
             
             var newCategory = new Category
             {
@@ -68,8 +68,8 @@ namespace PassAppDev.Controllers
 
             return View(categoryInDb);
         }
-    [HttpPost]
-    public IActionResult Edit(Category category)
+        [HttpPost]
+        public IActionResult Edit(Category category)
         {
             var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == category.Id);
             if (categoryInDb is null)
@@ -90,5 +90,16 @@ namespace PassAppDev.Controllers
 
             return RedirectToAction("Index");
         }
-  }
+
+        [HttpGet]
+        public IActionResult Notifications()
+        {
+            var currentUserId = _userManager.GetUserId(HttpContext.User);
+            IEnumerable<Notification> notifications = _context.Notifications
+                                                .Where(t => t.ApplicationUserId == currentUserId)
+                                                .OrderByDescending(t => t.Id).Take(5)
+                                                .ToList();
+            return View(notifications);
+        }
+    }
 }

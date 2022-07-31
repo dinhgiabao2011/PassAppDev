@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PassAppDev.Models.Notification>
+
+<h1>Notifications</h1>
+
+<table class="table">
+  <tbody>
+  @foreach (var item in Model){
+      <tr>
+       <td>
+    @if (item.Decision == "APPROVED")
+    {
+      <partial class="alert alert-info">  
+        Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
+                    </partial>
+    }
+    else
+    {
+      <partial class="alert alert-danger">  
+        Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
+                    </partial>      
+    }
+    <partial>
+        @item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()
+    </partial>
+    </td>
+  </tr>
+  }
+  </tbody>
+</table>
