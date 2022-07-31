@@ -20,7 +20,8 @@ namespace PassAppDev.Data
     public DbSet<Category> Categories { get; set; }
 		public DbSet<Book> Books { get; set; }
 		public DbSet<CartBook> CartBooks { get; set; }
-
+		public DbSet<Order> Orders { get; set; }
+		public DbSet<OrderedBook> OrderedBooks { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
     {

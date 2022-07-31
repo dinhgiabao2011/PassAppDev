@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassAppDev.Data;
 
 namespace PassAppDev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220730111246_AddOrderAndOrderedBookModel")]
+    partial class AddOrderAndOrderedBookModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,14 +266,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2faf4e02-cc79-442a-a578-14a3bb32f6fd",
+                            ConcurrencyStamp = "557be0c1-e299-4c9f-85de-0671c05ec0be",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEEKyxghwCBxBVTKxubcL1kV99oaTgco9JpIpIeBxOnzFYNkRhVVQkMLgoo8S5yvdTg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBsYp4L9cOp99TM6slqPGHag7ndmRZ3lcn+0E7fVNWPlUs9qyhO3nthMw4Mmmz8v0w==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "accd7d32-b6cc-420e-80a6-e52202d44966",
+                            SecurityStamp = "f74cb977-3c81-4db0-9e0b-154e8ff06ba6",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         },
@@ -279,14 +281,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "a0554bfd-1d4d-4a61-97d4-d827530e6883",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "900435fb-cb5f-43b2-a576-6954936f558f",
+                            ConcurrencyStamp = "36ad1683-c48c-465b-9e1e-90b44b77f405",
                             Email = "store@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAED3yPugM7WkY1kIxkXj2NAybalM0tAW9LV8KcAXvvozbJIq3+hz/a2wqNes3lp+mhw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELXRh1j/dHD+msS2UGjkXZAxbI1dPP0zbOjAdAxg3+IgzeVQzpIZWIaGa2Gj44c07Q==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "c9e96454-d9c4-4bb3-8d84-8ed0ef7060ff",
+                            SecurityStamp = "9e6f6eb5-79f6-4018-9780-8065292ff8fc",
                             TwoFactorEnabled = false,
                             UserName = "store@gmail.com"
                         });
@@ -411,8 +413,8 @@ namespace PassAppDev.Data.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

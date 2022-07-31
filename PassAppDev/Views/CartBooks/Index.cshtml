@@ -10,6 +10,7 @@
     <tr>
       <th scope="col">User ID</th>
       <th scope="col">Book ID</th>
+      <th scope="col">Tile</th>
       <th scope="col">Price</th>
       <th scope="col">Quantity</th>
       <th scope="col">Action</th>
@@ -20,15 +21,20 @@
       <tr>
       <th scope="row">@item.ApplicationUserId</th>
       <td>@item.BookId</td>
+      <td>@item.Book.Title</td>
       <td>@item.Price</td>
       <td>@item.Quatity</td>
       <td>
-          <a asp-controller="CartBooks" asp-action="Delete" asp-route-id=@item.Id class="btn btn-danger"> 
+          <a asp-controller="CartBooks" asp-action="Delete" asp-route-id=@item.Id class="btn btn-danger"
+          onclick="return confirm('Are you sure you want to delete this book: @item.Book.Title?')"> 
           Delete
         </a>
       </td>
     </tr>
-  }
 
+  }
   </tbody>
 </table>
+<a asp-controller="Orders" asp-action="Order" class="btn btn-success"> 
+   Confirm Order
+</a>

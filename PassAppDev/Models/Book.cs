@@ -23,9 +23,6 @@ namespace PassAppDev.Models
         [StringLength(255)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Quantity cannot be null ...")]
-        public int Quantity { get; set; }
-
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }
