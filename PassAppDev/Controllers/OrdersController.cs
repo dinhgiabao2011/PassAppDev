@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PassAppDev.Data;
 using PassAppDev.Models;
+using PassAppDev.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PassAppDev.Controllers
 {
+    [Authorize(Roles = Role.CUSTOMER)]
     public class OrdersController : Controller
     {
         private ApplicationDbContext _context;
@@ -60,6 +63,16 @@ namespace PassAppDev.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            IEnumerable<OrderedBook> orderedBooks = _context.OrderedBooks
+                                                    .Include(t => t.Order)
+                                                    .Where(t => t.OrderId == id)
+                                                    .ToList();
+            return View(orderedBooks);
         }
     }
 }
