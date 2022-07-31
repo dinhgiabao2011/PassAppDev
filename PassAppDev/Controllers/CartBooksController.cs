@@ -48,7 +48,7 @@ namespace PassAppDev.Controllers
                     ApplicationUserId = currentUserId,
                     BookId = id,
                     Quatity = 1,
-                    Price = bookInStore.Price,
+                    Price = bookInStore.Price
                 };
                 _context.Add(cartBook);
             }
