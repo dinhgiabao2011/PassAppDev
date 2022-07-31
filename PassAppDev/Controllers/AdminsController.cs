@@ -72,5 +72,28 @@ namespace PassAppDev.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}
+
+		[HttpGet]
+		public IActionResult ApprovedCategories(int id)
+		{
+			IEnumerable<Category> categories = _context.Categories
+				.Where(t => t.Status == Enums.CategoryStatus.Approved)
+					.Include(t => t.ApplicationUser)
+					.ToList();
+			return View(categories);
+		}
+
+		[HttpGet]
+		public IActionResult Delete(int id)
+		{
+			var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == id);
+			if (categoryInDb is null)
+			{
+				return NotFound();
+			}
+			_context.Categories.Remove(categoryInDb);
+			_context.SaveChanges();
+			return RedirectToAction("ApprovedCategories");
+		}
 	}
 }
