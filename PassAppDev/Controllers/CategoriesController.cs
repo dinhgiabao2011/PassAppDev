@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using PassAppDev.Data;
 using PassAppDev.Models;
 using PassAppDev.Utils;
@@ -10,7 +12,8 @@ using System.Linq;
 
 namespace PassAppDev.Controllers
 {
-  [Authorize(Roles = Role.ADMIN)]
+
+  [Authorize(Roles = Role.STOREOWNER)]
   public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,7 +27,9 @@ namespace PassAppDev.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Category> categories = _context.Categories.ToList();
+            IEnumerable<Category> categories = _context.Categories
+                                                .Include(t=>t.ApplicationUser)
+                                                .ToList();
             return View(categories);
         }
         [HttpGet]
@@ -33,34 +38,21 @@ namespace PassAppDev.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create(Category category)
+    public IActionResult Create(Category category)
         {
-            if (!ModelState.IsValid)
+      var currentUserId = _userManager.GetUserId(HttpContext.User);
+      if (!ModelState.IsValid)
             {
                 return View();
             }
             
             var newCategory = new Category
             {
-                Name = category.Name
+                Name = category.Name,
+                ApplicationUserId = currentUserId
             };
 
             _context.Add(newCategory);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == id);
-            if (categoryInDb is null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(categoryInDb);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -77,8 +69,7 @@ namespace PassAppDev.Controllers
             return View(categoryInDb);
         }
 
-        [HttpPost]
-        public IActionResult Edit(Category category)
+    public IActionResult Edit(Category category)
         {
             var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == category.Id);
             if (categoryInDb is null)
@@ -97,5 +88,7 @@ namespace PassAppDev.Controllers
 
             return RedirectToAction("Index");
         }
+
+
     }
 }

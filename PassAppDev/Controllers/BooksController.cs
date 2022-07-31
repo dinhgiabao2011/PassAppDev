@@ -45,7 +45,9 @@ namespace PassAppDev.Controllers
         {
             var viewModel = new BookCategoriesVM()
             {
-                Categories = _context.Categories.ToList()
+                Categories = _context.Categories
+                .Where(t=>t.Status==Enums.CategoryStatus.Approved)             
+                .ToList()
             };
             return View(viewModel);
         }
@@ -57,7 +59,9 @@ namespace PassAppDev.Controllers
             {
                 viewModel = new BookCategoriesVM
                 {
-                    Categories = _context.Categories.ToList()
+                    Categories = _context.Categories
+                    .Where(t => t.Status == Enums.CategoryStatus.Approved)
+                    .ToList()
                 };
                 return View(viewModel);
             }
@@ -101,7 +105,8 @@ namespace PassAppDev.Controllers
             var viewModel = new BookCategoriesVM
             {
                 Book = bookInDb,
-                Categories = _context.Categories.ToList()
+                Categories = _context.Categories
+                .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
             };
             return View(viewModel);
         }
@@ -120,7 +125,8 @@ namespace PassAppDev.Controllers
                 viewModel = new BookCategoriesVM
                 {
                     Book = viewModel.Book,
-                    Categories = _context.Categories.ToList()
+                    Categories = _context.Categories
+                    .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
                 };
                 return View(viewModel);
             }
