@@ -40,5 +40,18 @@ namespace PassAppDev.Controllers
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
+
+		[HttpGet]
+		public IActionResult BookDetails(int id)
+		{
+			var bookInDb = _context.Books.Include(t => t.Category)
+					.SingleOrDefault(t => t.Id == id);
+			if (bookInDb is null)
+			{
+				return NotFound();
+			}
+
+			return View(bookInDb);
+		}
 	}
 }

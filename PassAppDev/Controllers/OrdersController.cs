@@ -37,7 +37,7 @@ namespace PassAppDev.Controllers
             }
             var newOrder = new Order
             {
-                ApplicationUserId = currentUserId,
+                ApplicationUserId = currentUserId
             };
             _context.Add(newOrder);
             await _context.SaveChangesAsync();
@@ -59,7 +59,16 @@ namespace PassAppDev.Controllers
             _context.RemoveRange(booksInCart);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
-
         }
+
+    [HttpGet]
+    public IActionResult Details(int id)
+		{
+      IEnumerable<OrderedBook> orderedBooks = _context.OrderedBooks
+                                              .Include(t=>t.Order)
+                                              .Where(t=>t.OrderId==id)
+                                              .ToList();
+      return View(orderedBooks);
+    }
     }
 }
