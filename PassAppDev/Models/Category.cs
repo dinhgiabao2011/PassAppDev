@@ -13,7 +13,8 @@ namespace PassAppDev.Models
         [Required(ErrorMessage = "Name cannot be null ...")]
         [StringLength(255)]
         public string Name { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string OldName { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
         public CategoryStatus Status { get; set; } = CategoryStatus.Pending;
 
         public List<Book> Books { get; set; }

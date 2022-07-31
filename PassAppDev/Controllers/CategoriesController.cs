@@ -68,7 +68,7 @@ namespace PassAppDev.Controllers
 
             return View(categoryInDb);
         }
-
+    [HttpPost]
     public IActionResult Edit(Category category)
         {
             var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == category.Id);
@@ -82,7 +82,9 @@ namespace PassAppDev.Controllers
                 return View(categoryInDb);
             }
 
+            categoryInDb.OldName = categoryInDb.Name;
             categoryInDb.Name = category.Name;
+            categoryInDb.Status = Enums.CategoryStatus.Pending;
 
             _context.SaveChanges();
 

@@ -43,8 +43,17 @@ namespace PassAppDev.Controllers
 			{
 				return NotFound();
 			}
-
-			_context.Categories.Remove(categoryInDb);
+			if(categoryInDb.OldName=="")
+			{
+				_context.Categories.Remove(categoryInDb);
+			}
+			else
+			{
+				categoryInDb.Name = categoryInDb.OldName;
+				categoryInDb.OldName = "";
+				categoryInDb.Status = Enums.CategoryStatus.Approved;
+			}
+			
 			_context.SaveChanges();
 			return RedirectToAction("Index");
 		}

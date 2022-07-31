@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassAppDev.Data;
 
 namespace PassAppDev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731111754_AddNewName")]
+    partial class AddNewName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,14 +266,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8401c0c-a4e6-49e9-b17a-4399976ace31",
+                            ConcurrencyStamp = "b82bad93-834c-4e4b-a98f-4c6a48655c94",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEIIpD5aPcW2Ut2k3GK3d3JbqFeQodMa0H0uxJrNIGStWSxAtTKEfqWE1wXoLJf8a6Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELvrIAXIbBg7ytuYapTe+b70jbt2xKP5slMrFAgdrj1wO2YXqAoJoAAplrpqGi2YGQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8968a6d1-08ac-410d-8240-e37695227f7d",
+                            SecurityStamp = "4f7c2c48-29c1-4e45-98cc-818867ad2998",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         },
@@ -279,14 +281,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "a0554bfd-1d4d-4a61-97d4-d827530e6883",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d718400-6fbd-4fcf-80ef-c7f098c9f9ad",
+                            ConcurrencyStamp = "c6359f4e-6103-47e8-ab3f-e6b51902b115",
                             Email = "store@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEKMFmoSUiMNMa0FqntZm9Rr81nFNiWZxX8K4qgVtG80I5ka9khu5KYcGeGK7xeTfnA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHxMuk/ucOE+tO8CT3N21VGYPtaTqXOCKpdZsSP9MHo+5Czi3wwJjMCKuz7rgSC+qg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "80574775-9be8-46dc-b535-aea2803e7665",
+                            SecurityStamp = "e9be68ec-4133-4ad8-aaba-b83f4b8070d1",
                             TwoFactorEnabled = false,
                             UserName = "store@gmail.com"
                         });
@@ -373,7 +375,7 @@ namespace PassAppDev.Data.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<string>("OldName")
+                    b.Property<string>("NewName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
