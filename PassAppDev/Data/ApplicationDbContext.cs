@@ -23,6 +23,7 @@ namespace PassAppDev.Data
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderedBook> OrderedBooks { get; set; }
 		public DbSet<Notification> Notifications { get; set; }
+		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 		protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);

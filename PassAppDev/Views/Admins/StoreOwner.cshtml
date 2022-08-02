@@ -1,0 +1,21 @@
+﻿<h1>Store Owner List In Store</h1>
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">User Name</th>
+			<th scope="col">Name</th>
+			<th scope="col">Password</th>	
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<th scope="row">@item.UserName</th>
+				<td>@item.Email</td>
+				<td>@item.PasswordHash</td>			
+			</tr>
+		}
+
+	</tbody>
+</table>

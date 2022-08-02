@@ -121,5 +121,35 @@ namespace PassAppDev.Controllers
 			_context.SaveChanges();
 			return RedirectToAction("ApprovedCategories");
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> Customers()
+		{
+			var customer = await (from user in _context.Users
+														join userRole in _context.UserRoles
+														on user.Id equals userRole.UserId
+														join roles in _context.Roles
+														on userRole.RoleId equals roles.Id
+														where roles.Name == "customer"
+														select user).ToListAsync();
+
+
+			return View(customer);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> StoreOwner()
+		{
+			var storeOwner = await (from user in _context.Users
+														join userRole in _context.UserRoles
+														on user.Id equals userRole.UserId
+														join roles in _context.Roles
+														on userRole.RoleId equals roles.Id
+														where roles.Name == "storeowner"
+														select user).ToListAsync();
+
+
+			return View(storeOwner);
+		}
 	}
 }
