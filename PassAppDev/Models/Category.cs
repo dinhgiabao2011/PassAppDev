@@ -14,7 +14,7 @@ namespace PassAppDev.Models
         [StringLength(255)]
         public string Name { get; set; }
         public string OldName { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public CategoryStatus Status { get; set; } = CategoryStatus.Pending;
 
         public List<Book> Books { get; set; }
