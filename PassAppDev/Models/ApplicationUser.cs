@@ -14,6 +14,7 @@ namespace PassAppDev.Models
 
 		public string Address { get; set; }
 
+
 		public List<Category> Categories { get; set; }
 	}
 }
