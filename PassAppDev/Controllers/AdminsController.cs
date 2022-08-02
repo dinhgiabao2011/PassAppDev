@@ -7,10 +7,13 @@ using PassAppDev.Data;
 
 using PassAppDev.Models;
 using PassAppDev.Utils;
+using PassAppDev.ViewModels;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PassAppDev.Controllers
@@ -20,6 +23,7 @@ namespace PassAppDev.Controllers
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<ApplicationUser> _userManager;
+		PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
 		public AdminsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
 		{
 			_context = context;
@@ -134,6 +138,74 @@ namespace PassAppDev.Controllers
 		{
 			var storeOwner = _userManager.GetUsersInRoleAsync(Role.STOREOWNER).Result;
 			return View(storeOwner);
+		}
+
+		[HttpGet]
+		public IActionResult ChangeCustomerPassword(string id)
+		{
+			var userInDb = _context.ApplicationUsers.SingleOrDefault(t => t.Id == id);
+
+			if (userInDb is null)
+			{
+				return NotFound();
+			}
+			
+			return View(userInDb);
+		}
+
+		[HttpGet]
+		public IActionResult ChangeStoreOwnerPassword(string id)
+		{
+			var userInDb = _context.ApplicationUsers.SingleOrDefault(t => t.Id == id);
+
+			if (userInDb is null)
+			{
+				return NotFound();
+			}
+
+			return View(userInDb);
+		}
+
+		[HttpPost]
+		public IActionResult ChangeCustomerPassword(ApplicationUser user)
+		{
+			var userInDb = _context.ApplicationUsers.SingleOrDefault(t => t.Id == user.Id);
+
+			if (userInDb is null)
+			{
+				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return View(userInDb);
+			}
+			
+			userInDb.PasswordHash = passwordHasher.HashPassword(null, user.PasswordHash);
+			_context.SaveChanges();
+
+			return RedirectToAction("Customers");
+		}
+
+		[HttpPost]
+		public IActionResult ChangeStoreOwnerPassword(ApplicationUser user)
+		{
+			var userInDb = _context.ApplicationUsers.SingleOrDefault(t => t.Id == user.Id);
+
+			if (userInDb is null)
+			{
+				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				return View(userInDb);
+			}
+
+			userInDb.PasswordHash = passwordHasher.HashPassword(null, user.PasswordHash);
+			_context.SaveChanges();
+
+			return RedirectToAction("StoreOwner");
 		}
 	}
 }
