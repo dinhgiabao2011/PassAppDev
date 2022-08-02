@@ -125,30 +125,14 @@ namespace PassAppDev.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Customers()
 		{
-			var customer = await (from user in _context.Users
-														join userRole in _context.UserRoles
-														on user.Id equals userRole.UserId
-														join roles in _context.Roles
-														on userRole.RoleId equals roles.Id
-														where roles.Name == "customer"
-														select user).ToListAsync();
-
-
+			var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
 			return View(customer);
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> StoreOwner()
 		{
-			var storeOwner = await (from user in _context.Users
-														join userRole in _context.UserRoles
-														on user.Id equals userRole.UserId
-														join roles in _context.Roles
-														on userRole.RoleId equals roles.Id
-														where roles.Name == "storeowner"
-														select user).ToListAsync();
-
-
+			var storeOwner = _userManager.GetUsersInRoleAsync(Role.STOREOWNER).Result;
 			return View(storeOwner);
 		}
 	}
