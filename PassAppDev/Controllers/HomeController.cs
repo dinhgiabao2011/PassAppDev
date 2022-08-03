@@ -42,9 +42,8 @@ namespace PassAppDev.Controllers
 			IEnumerable<Book> books = _context.Books
 				.Include(t => t.Category)
 				.ToList();
-			
-			return View(books);
 
+			return View(books);
 		}
 
 		public IActionResult Privacy()
