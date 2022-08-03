@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PassAppDev.Data;
@@ -22,11 +23,26 @@ namespace PassAppDev.Controllers
 			_context = context;
 			_logger = logger;
 		}
-		public IActionResult Index()
+
+		public IActionResult Index(string keyWord)
 		{
+
+			if (!string.IsNullOrWhiteSpace(keyWord))
+			{
+				var result = _context.Books
+					.Include(t => t.Category)
+					.Where(t => t.Category.Name.Contains(keyWord)
+							|| t.Title.Contains(keyWord)
+					)
+					.ToList();
+
+				return View(result);
+			}
+
 			IEnumerable<Book> books = _context.Books
 				.Include(t => t.Category)
 				.ToList();
+
 			return View(books);
 		}
 

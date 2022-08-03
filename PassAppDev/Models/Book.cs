@@ -22,8 +22,10 @@ namespace PassAppDev.Models
         [Required(ErrorMessage = "Description cannot be null ...")]
         [StringLength(255)]
         public string Description { get; set; }
-
+        
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-    }
+
+        public byte[] ImageData { get; set; }
+  }
 }

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+
 namespace PassAppDev.Controllers
 {
     [Authorize(Roles = Role.CUSTOMER)]
@@ -26,7 +28,7 @@ namespace PassAppDev.Controllers
         public IActionResult Index()
         {
             var currentUserId = _userManager.GetUserId(HttpContext.User);
-            IEnumerable<CartBook> booksInCart = _context.CartBooks
+           IEnumerable<CartBook> booksInCart = _context.CartBooks
                 .Include(t => t.Book)
                 .Where(t => t.ApplicationUserId == currentUserId)
                 .ToList();

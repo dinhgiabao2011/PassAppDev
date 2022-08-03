@@ -6,8 +6,12 @@ using PassAppDev.Data;
 using PassAppDev.Models;
 using PassAppDev.Utils;
 using PassAppDev.ViewModels;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PassAppDev.Controllers
 {
@@ -23,24 +27,29 @@ namespace PassAppDev.Controllers
     }
 
         [HttpGet]
-        public IActionResult Index(string category)
+        public IActionResult Index(string keyWord)
         {
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                var result = _context.Books
-                  .Include(t => t.Category)
-                  .Where(t => t.Category.Name.Equals(category))
-                  .ToList();
 
-                return View(result);
-            }
-            IEnumerable<Book> books = _context.Books
-                .Include(t => t.Category)
-                .ToList();
-            return View(books);
+          if (!string.IsNullOrWhiteSpace(keyWord))
+          {
+            var result = _context.Books
+              .Include(t => t.Category)
+              .Where(t => t.Category.Name.Contains(keyWord)
+                  || t.Title.Contains(keyWord)
+              )
+              .ToList();
+
+            return View(result);
+          }
+
+          IEnumerable<Book> books = _context.Books
+            .Include(t => t.Category)
+            .ToList();
+
+          return View(books);
         }
 
-        [HttpGet]
+    [HttpGet]
         public IActionResult Create()
         {
             var viewModel = new BookCategoriesVM()
@@ -53,7 +62,7 @@ namespace PassAppDev.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(BookCategoriesVM viewModel)
+        public async Task<IActionResult> CreateAsync(BookCategoriesVM viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -65,19 +74,27 @@ namespace PassAppDev.Controllers
                 };
                 return View(viewModel);
             }
-            var newBook = new Book
-            {
+
+         using (var memoryStream = new MemoryStream())  
+           {
+              await viewModel.FormFile.CopyToAsync(memoryStream);
+
+              var newBook = new Book
+              {
                 Title = viewModel.Book.Title,
                 Author = viewModel.Book.Author,
                 Price = viewModel.Book.Price,
                 Description = viewModel.Book.Description,
-                CategoryId = viewModel.Book.CategoryId
-            };
+                CategoryId = viewModel.Book.CategoryId,
+                ImageData = memoryStream.ToArray()
+              };
 
-            _context.Add(newBook);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
+          _context.Add(newBook);
+          await _context.SaveChangesAsync();
+           }
+
+              return RedirectToAction("Index");
+          }
 
         [HttpGet]
         public IActionResult Delete(int id)
@@ -152,7 +169,13 @@ namespace PassAppDev.Controllers
                 return NotFound();
             }
 
-            return View(bookInDb);
+
+            string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
+
+            string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+            ViewBag.ImageData = image;
+      return View(bookInDb);
         }
     }
 }
