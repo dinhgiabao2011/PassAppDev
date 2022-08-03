@@ -36,12 +36,29 @@ namespace PassAppDev.Controllers
 					)
 					.ToList();
 
+				foreach (var book in result)
+				{
+					string imageBase64 = Convert.ToBase64String(book.ImageData);
+
+					string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+					ViewBag.ImageData = image;
+				}
 				return View(result);
 			}
 
 			IEnumerable<Book> books = _context.Books
 				.Include(t => t.Category)
 				.ToList();
+
+			foreach ( var book in books)
+				{
+				string imageBase64 = Convert.ToBase64String(book.ImageData);
+
+				string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+				ViewBag.ImageData = image;
+			}
 
 			return View(books);
 		}
