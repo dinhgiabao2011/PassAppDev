@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PassAppDev.Models.Book>
+﻿@using PassAppDev.ViewModels
+@model IEnumerable<PassAppDev.ViewModels.BookViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -25,18 +26,23 @@
 	</a>
 </div>
 
+<div class="card-deck" style="padding: 5% 9%;">
 @foreach (var item in Model)
 {
-<div class="card" style="width:200px">
-  <img 
-    class="card-img-top" 
-    src="@ViewBag.ImageData" 
-    alt="Todo image">
+<div class="card border-secondary" style="width:20%;" >
+	<img 
+    class="card-img-top" style="height:60%; object-fit:cover"
+    src="@item.ImageUrl" 
+    alt="image">
 	<div class="card-body">
 		<h4 class="card-title">@item.Title</h4>
-		<a asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+		<h5 class="card-text">Author: @item.Author </h5>
+		<h5 class="card-text">Type: @item.Category </h5>
+		<h5 class="card-text">Price: @item.Price </h5>
+		<a style="margin-top:20%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
 			Details
 		</a>
 	</div>
 </div>
 }
+</div>
