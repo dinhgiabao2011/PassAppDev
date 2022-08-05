@@ -33,6 +33,7 @@ namespace PassAppDev.Controllers
 			var currentUserId = _userManager.GetUserId(HttpContext.User);
 			IEnumerable<CartBook> booksInCart = _context.CartBooks
 					 .Include(t => t.Book)
+					 .Include(t => t.ApplicationUser)
 					 .Where(t => t.ApplicationUserId == currentUserId)
 					 .ToList();
 			return View(booksInCart);
@@ -78,60 +79,34 @@ namespace PassAppDev.Controllers
 			return RedirectToAction("Index");
 		}
 
-		//public IActionResult SearchBook(string keyWord)
-		//{
-		//	var model = new Models.Book();
-		//	var bookVMList = new List<BookViewModel>();
-		//	if (!string.IsNullOrWhiteSpace(keyWord))
-		//	{
-		//		var result = _context.Books
-		//			.Include(t => t.Category)
-		//			.Where(t => t.Category.Name.Contains(keyWord)
-		//					|| t.Title.Contains(keyWord)
-		//			)
-		//			.ToList();
 
-		//		foreach (var book in result)
-		//		{
-		//			string imageBase64 = Convert.ToBase64String(book.ImageData);
+		public IActionResult IncreaseQty(int id)
+		{
+			var cartBookInDb = _context.CartBooks.SingleOrDefault(t => t.Id==id);
+			if (cartBookInDb == null)
+			{
+				return NotFound();
+			}
 
-		//			string image = string.Format("data:image/jpg;base64,{0}", imageBase64);
+			cartBookInDb.Quatity ++;
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
 
-		//			var newbookVM = new BookViewModel()
-		//			{
-		//				Title = book.Title,
-		//				Author = book.Author,
-		//				Price = book.Price,
-		//				Id = book.Id,
-		//				ImageUrl = image
-		//			};
-		//			bookVMList.Add(newbookVM);
-		//		}
-		//		return View(bookVMList);
-		//	}
-
-		//	IEnumerable<Book> books = _context.Books
-		//		.Include(t => t.Category)
-		//		.ToList();
-
-		//	foreach (var book in books)
-		//	{
-		//		string imageBase64 = Convert.ToBase64String(book.ImageData);
-
-		//		string image = string.Format("data:image/jpg;base64,{0}", imageBase64);
-
-		//		var newbookVM = new BookViewModel()
-		//		{
-		//			Title = book.Title,
-		//			Author = book.Author,
-		//			Price = book.Price,
-		//			Id = book.Id,
-		//			ImageUrl = image
-		//		};
-		//		bookVMList.Add(newbookVM);
-		//	}
-		//return View("~/Views/Home/Index.cshtml", model); ;
-		//}
-
+		public IActionResult DecreaseQty(int id)
+		{
+			var cartBookInDb = _context.CartBooks.SingleOrDefault(t => t.Id == id);
+			if (cartBookInDb == null)
+			{
+				return NotFound();
+			}
+			if (cartBookInDb.Quatity > 0)
+			{
+				cartBookInDb.Quatity--;
+			}
+			
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
 	}
 }

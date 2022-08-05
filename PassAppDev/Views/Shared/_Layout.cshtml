@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using PassAppDev.Utils
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,7 +25,14 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>                     
+                        </li>
+                        @if (User.IsInRole(Role.CUSTOMER) || (!User.Identity.IsAuthenticated))
+                        {
+                            <form>
+                                <input type="text" name="keyWord" placeholder="Search by Category" />
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </form>
+                        }
                     </ul>
                 </div>
             </div>

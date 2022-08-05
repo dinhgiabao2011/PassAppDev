@@ -77,7 +77,7 @@ namespace PassAppDev.Controllers
 				};
 				bookVMList.Add(newbookVM);
 			}
-			return View(bookVMList);
+			return View("~/Views/Home/Index.cshtml", bookVMList);
 		}
 
 		public IActionResult Privacy()

@@ -6,10 +6,6 @@
 }
 <div class="container">
     <div class="text-center">
-        <form>
-            <input type="text" name="keyWord" placeholder="Search by Category" />
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
 
         @if (!User.Identity.IsAuthenticated)
         {
@@ -44,7 +40,8 @@
             if (User.IsInRole(Role.CUSTOMER))
             {
                 <h1>Welcome To The FPT Book Store</h1>
-                 <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
+
+                <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
                     Shopping Cart
                 </a>
                 <a asp-controller="Orders" asp-action="Index" class="btn btn-info">
@@ -77,7 +74,6 @@
             if (User.IsInRole(Role.STOREOWNER))
             {
                 <h1>Welcome To The Page For Store Owner</h1>
-
                 <a asp-controller="Books" asp-action="Index" class="btn btn-info">
                     Manage Books
                 </a>
