@@ -4,7 +4,10 @@
 @model IEnumerable<PassAppDev.Models.Order>
 
 <h1>List of Orders</h1>
-
+<form>
+  <input type="text" name="keyWord" placeholder="Search by Category" />
+  <button asp-controller = "Home" type="submit" class="btn btn-primary">Search</button>
+  </form>
 <table class="table">
   <thead>
     <tr>

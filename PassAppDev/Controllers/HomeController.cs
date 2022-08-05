@@ -54,7 +54,7 @@ namespace PassAppDev.Controllers
 					};
 					bookVMList.Add(newbookVM);
 				}
-				return View(result);
+				return View(bookVMList);
 			}
 
 			IEnumerable<Book> books = _context.Books

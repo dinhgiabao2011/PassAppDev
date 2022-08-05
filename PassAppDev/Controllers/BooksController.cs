@@ -49,7 +49,7 @@ namespace PassAppDev.Controllers
           return View(books);
         }
 
-    [HttpGet]
+        [HttpGet]
         public IActionResult Create()
         {
             var viewModel = new BookCategoriesVM()
@@ -165,17 +165,17 @@ namespace PassAppDev.Controllers
             bookInDb.CategoryId = viewModel.Book.CategoryId;
 
 
-      using (var memoryStream = new MemoryStream())
+       using (var memoryStream = new MemoryStream())
       
               {
                 await viewModel.FormFile.CopyToAsync(memoryStream);
 
-              
-                bookInDb.ImageData = memoryStream.ToArray();
+              if (memoryStream.Length > 0)
 
-                
-             }
-  
+                bookInDb.ImageData = memoryStream.ToArray();
+              else 
+                 bookInDb.ImageData = viewModel.Book.ImageData;
+             } 
               await _context.SaveChangesAsync();
            return RedirectToAction("Index");
         }
