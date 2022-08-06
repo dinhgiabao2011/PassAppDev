@@ -1,42 +1,115 @@
-﻿@model IEnumerable<PassAppDev.Models.Book>
+﻿@using PassAppDev.ViewModels
+@model IEnumerable<PassAppDev.ViewModels.BookViewModel>
+@using PassAppDev.Utils
 @{
     ViewData["Title"] = "Home Page";
 }
+<div class="container">
+    <div class="text-center">
 
-<div class="text-center">
- <form>
-      <input type="text" name="keyWord" placeholder="Search by Category" />
-       <button type="submit" class="btn btn-primary">Search</button>
-       </form>
-	<a asp-controller="Categories" asp-action="Index" class="btn btn-info">
-		Manage Categories
-	</a>
-	<a asp-controller="Books" asp-action="Index" class="btn btn-info">
-		Manage Books
-	</a>
-	<a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
-		Shopping Cart
-	</a>
-	<a asp-controller="Orders" asp-action="Index" class="btn btn-info">
-		View List of Orders (For Customer)
-	</a>
-	<a asp-controller="Stores" asp-action="Index" class="btn btn-info">
-		View List of Orders (For Store Owner)
-	</a>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <h3>New User ???</h3>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-danger">Register your account</a>
+            <div class="row card-deck">
+
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4">
+                        <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
+                     src="@item.ImageUrl"
+                     alt="image">
+                        <div class="border border-dark card-body">
+                            <h4 class="card-title"> @item.Title</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Author: @item.Author </li>
+                                <li class="list-group-item">Price: @item.Price </li>
+                            </ul>
+                            <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+                                Details
+                            </a>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            if (User.IsInRole(Role.CUSTOMER))
+            {
+                <h1>Welcome To The FPT Book Store</h1>
+
+                <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
+                    Shopping Cart
+                </a>
+                <a asp-controller="Orders" asp-action="Index" class="btn btn-info">
+                    View List of Orders (For Customer)
+                </a>
+                <div class="row card-deck">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4">
+                            <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
+                     src="@item.ImageUrl"
+                     alt="image">
+                            <div class="border border-dark card-body">
+                                <h4 class="card-title"> @item.Title</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Author: @item.Author </li>
+                                    <li class="list-group-item">Price: @item.Price </li>
+                                </ul>
+                                <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+                                    Details
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            if (User.IsInRole(Role.STOREOWNER))
+            {
+                <h1>Welcome To The Page For Store Owner</h1>
+                <a asp-controller="Books" asp-action="Index" class="btn btn-info">
+                    Manage Books
+                </a>
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-info">
+                    Manage Categories
+                </a>
+                <a asp-controller="Stores" asp-action="Index" class="btn btn-info">
+                    View List of Orders (For Store Owner)
+                </a>
+                <div class="row card-deck">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4">
+                            <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
+                     src="@item.ImageUrl"
+                     alt="image">
+                            <div class="border border-dark card-body">
+                                <h4 class="card-title"> @item.Title</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Author: @item.Author </li>
+                                    <li class="list-group-item">Price: @item.Price </li>
+                                </ul>
+                                <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+                                    Details
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+                <a asp-controller="Todoes" asp-action="Index" class="btn btn-primary">Go to your Todoes</a>
+            }
+        }
+
+    </div>
 </div>
 
-@foreach (var item in Model)
-{
-<div class="card" style="width:200px">
-  <img 
-    class="card-img-top" 
-    src="@ViewBag.ImageData" 
-    alt="Todo image">
-	<div class="card-body">
-		<h4 class="card-title">@item.Title</h4>
-		<a asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
-			Details
-		</a>
-	</div>
-</div>
-}

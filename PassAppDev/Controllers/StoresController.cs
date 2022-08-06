@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+
 namespace PassAppDev.Controllers
 {
 	[Authorize(Roles = Role.STOREOWNER)]
@@ -28,6 +30,7 @@ namespace PassAppDev.Controllers
 		}
 		public IActionResult Index()
 		{
+
 			IEnumerable<Order> orders = _context.Orders
 								.Include(t => t.ApplicationUser)
 								.ToList();
@@ -41,6 +44,32 @@ namespace PassAppDev.Controllers
 																							.Where(t => t.OrderId == id)
 																							.ToList();
 			return View(orderedBooks);
+		}
+
+		public async Task<IActionResult> SearchUser(string email)
+		{
+			var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
+
+			//await (from user in _context.ApplicationUsers
+			//										join userRole in _context.UserRoles
+			//										on user.Id equals userRole.UserId
+			//										join role in _context.Roles on userRole.RoleId
+			//										equals role.Id where role.Name == "customer" select user).ToListAsync();
+
+			if (!string.IsNullOrWhiteSpace(email))
+			{
+
+				var result = customer
+									.Where(t => t.Email.Contains(email)
+							)
+									.ToList();
+
+				return View(result);
+			}
+
+
+			return View(customer);
+
 		}
 	}
 }

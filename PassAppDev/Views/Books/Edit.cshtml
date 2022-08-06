@@ -1,10 +1,11 @@
 ﻿@using PassAppDev.Enums
 @using PassAppDev.ViewModels
+@using PassAppDev.Models
 @model BookCategoriesVM
 
 <h1>Edit a Books</h1>
 
-<form asp-controller="Books" asp-action="Edit" method="post">
+<form enctype="multipart/form-data" asp-controller="Books" asp-action="Edit" method="post">
   <input asp-for="Book.Id" type="hidden" value="@Model.Book.Id" />
   <div class="form-group">
     <label>Title</label>
@@ -35,6 +36,25 @@
      </select>
   </div>
   <div class="form-group">
+     <label>Current Image</label>
+      <img class="rounded" style="object-fit: cover; width:30%; height:40%;"
+        src="@ViewBag.ImageData" 
+        alt="image">
+   </div>
+   <div class="form-group">
+        <label>New Image</label>
+        <dl>
+        <dt>
+            <label asp-for="@Model.FormFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="@Model.FormFile" type="file">
+        </dd>
+    </dl>
+  </div>
+  <div class="form-group">
     <button type="submit" class="btn btn-primary">Edit</button>
   </div>
 </form>
+
+     

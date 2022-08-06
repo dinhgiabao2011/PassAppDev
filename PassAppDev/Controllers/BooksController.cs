@@ -49,7 +49,7 @@ namespace PassAppDev.Controllers
           return View(books);
         }
 
-    [HttpGet]
+        [HttpGet]
         public IActionResult Create()
         {
             var viewModel = new BookCategoriesVM()
@@ -112,24 +112,35 @@ namespace PassAppDev.Controllers
 
         [HttpGet]
         public IActionResult Edit(int id)
-        {
-            var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
-            if (bookInDb is null)
-            {
+          {
+              var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
+              if (bookInDb is null)
+              {
                 return NotFound();
-            }
+              }
 
-            var viewModel = new BookCategoriesVM
-            {
+              var viewModel = new BookCategoriesVM
+              {
                 Book = bookInDb,
                 Categories = _context.Categories
-                .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
-            };
+                  .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
+
+
+
+              };
+
+              string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
+
+              string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+              ViewBag.ImageData = image;
+
             return View(viewModel);
-        }
+
+          }
 
         [HttpPost]
-        public IActionResult Edit(BookCategoriesVM viewModel)
+        public async Task<IActionResult> Edit(BookCategoriesVM viewModel)
         {
             var bookInDb = _context.Books.SingleOrDefault(t => t.Id == viewModel.Book.Id);
             if (bookInDb is null)
@@ -139,24 +150,34 @@ namespace PassAppDev.Controllers
 
             if (!ModelState.IsValid)
             {
-                viewModel = new BookCategoriesVM
-                {
-                    Book = viewModel.Book,
-                    Categories = _context.Categories
-                    .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
-                };
-                return View(viewModel);
+              viewModel = new BookCategoriesVM
+              {
+                Book = viewModel.Book,
+                Categories = _context.Categories
+                  .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
+              };
+              return View(viewModel);
             }
-
             bookInDb.Title = viewModel.Book.Title;
             bookInDb.Author = viewModel.Book.Author;
             bookInDb.Price = viewModel.Book.Price;
             bookInDb.Description = viewModel.Book.Description;
             bookInDb.CategoryId = viewModel.Book.CategoryId;
 
-            _context.SaveChanges();
 
-            return RedirectToAction("Index");
+       using (var memoryStream = new MemoryStream())
+      
+              {
+                await viewModel.FormFile.CopyToAsync(memoryStream);
+
+              if (memoryStream.Length > 0)
+
+                bookInDb.ImageData = memoryStream.ToArray();
+              else 
+                 bookInDb.ImageData = viewModel.Book.ImageData;
+             } 
+              await _context.SaveChangesAsync();
+           return RedirectToAction("Index");
         }
 
         [HttpGet]
