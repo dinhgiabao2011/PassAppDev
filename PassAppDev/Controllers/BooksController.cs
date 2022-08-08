@@ -170,11 +170,8 @@ namespace PassAppDev.Controllers
               {
                 await viewModel.FormFile.CopyToAsync(memoryStream);
 
-              if (memoryStream.Length > 0)
-
-                bookInDb.ImageData = memoryStream.ToArray();
-              else 
-                 bookInDb.ImageData = viewModel.Book.ImageData;
+              if (memoryStream != null)
+                 bookInDb.ImageData = memoryStream.ToArray();
              } 
               await _context.SaveChangesAsync();
            return RedirectToAction("Index");

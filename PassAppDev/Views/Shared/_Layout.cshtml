@@ -1,4 +1,5 @@
 ﻿@using PassAppDev.Utils
+@using PassAppDev.Models
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PassAppDev</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -28,11 +30,20 @@
                         </li>
                         @if (User.IsInRole(Role.CUSTOMER) || (!User.Identity.IsAuthenticated))
                         {
+                            <li class="nav-item">
                             <form>
                                 <input type="text" name="keyWord" placeholder="Search by Category" />
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button asp-controller="Home" type="submit" class="btn btn-primary">Search</button>
                             </form>
+                            </li>
                         }
+                       @* @if (User.IsInRole(Role.STOREOWNER))
+                        {       
+                            <li class="nav-item">
+                            
+                            </li>
+                        }*@
+                   
                     </ul>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-﻿<h1>Index of Todoes</h1>
+﻿<h1>List of book in store</h1>
 <div class="form-group">
   <a asp-controller="Books" asp-action="Create" class="btn btn-primary">
     Create a new Book
@@ -12,20 +12,19 @@
   </form>
 </div>
 
-<table class="table">
+<table class="table text-center">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
+ 
+      <th scope="col">Book Title</th>
       <th scope="col">Price</th>
       <th scope="col">Category</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody >
     @foreach (var item in Model){
       <tr>
-      <th scope="row">@item.Id</th>
       <td>@item.Title</td>
       <td>@item.Price</td>
       <td>@item.Category.Name</td>

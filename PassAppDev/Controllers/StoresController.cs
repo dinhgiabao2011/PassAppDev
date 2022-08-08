@@ -7,6 +7,7 @@ using PassAppDev.Data;
 
 using PassAppDev.Models;
 using PassAppDev.Utils;
+using PassAppDev.ViewModels;
 
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PassAppDev.Controllers
 {
@@ -50,11 +52,6 @@ namespace PassAppDev.Controllers
 		{
 			var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
 
-			//await (from user in _context.ApplicationUsers
-			//										join userRole in _context.UserRoles
-			//										on user.Id equals userRole.UserId
-			//										join role in _context.Roles on userRole.RoleId
-			//										equals role.Id where role.Name == "customer" select user).ToListAsync();
 
 			if (!string.IsNullOrWhiteSpace(email))
 			{
@@ -71,5 +68,28 @@ namespace PassAppDev.Controllers
 			return View(customer);
 
 		}
+
+		//public IActionResult GetNotification()
+		//{
+		//	var notiVMList = new List<NotificationVM>();
+
+		//	IEnumerable<Notification> notifications = _context.Notifications.ToList();
+
+		//	foreach (var noti in notifications)
+
+		//	{
+		//		var notificationViewModel = new NotificationVM()
+		//		{
+		//			CategoryName = noti.CategoryName,
+		//			Decision = noti.Decision,
+		//			Action = noti.Action,
+		//			NotifiedAt = noti.NotifiedAt,
+		//	};
+		//		notiVMList.Add(notificationViewModel);
+		//	}
+
+		//	return View("~/Views/Stores/Index.cshtml", notiVMList);
+
+		//}
 	}
 }

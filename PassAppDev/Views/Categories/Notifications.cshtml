@@ -2,10 +2,14 @@
 
 <h1>Notifications</h1>
 
-<table class="table">
-  <tbody>
-  @foreach (var item in Model){
-    <tr>
+<div class="dropdown show">
+  <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="bi bi-bell-fill" style="color:black; font-size:1.5vw;"></i>
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        @foreach (var item in Model){
+    <tr class="dropdown-item">
        <td>
     @if (item.Decision == "APPROVED")
     {
@@ -25,5 +29,6 @@
       </td>
     </tr>
   }
-  </tbody>
-</table>
+  </div>
+</div>
+
