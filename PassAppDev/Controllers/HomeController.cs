@@ -104,19 +104,5 @@ namespace PassAppDev.Controllers
 			return View(bookInDb);
 		}
 
-		[HttpGet]
-		public IActionResult GetImage(int id)
-		{
-			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
-
-			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-			ViewBag.ImageData = image;
-
-			return File(image, "image/jpg");
-			
-		}
 	}
 }
