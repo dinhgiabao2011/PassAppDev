@@ -1,5 +1,5 @@
 ﻿@using PassAppDev.ViewModels
-@model IEnumerable<PassAppDev.ViewModels.BookViewModel>
+@model PassAppDev.ViewModels.BookNotificationViewModel
 @using PassAppDev.Utils
 @{
     ViewData["Title"] = "Home Page";
@@ -13,7 +13,7 @@
             <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-danger">Register your account</a>
             <div class="row card-deck">
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.BookViewModels)
                 {
                     <div class="col-lg-4">
                         <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
@@ -35,80 +35,113 @@
 
             </div>
         }
-        else
+        else if (User.IsInRole(Role.CUSTOMER))
         {
-            if (User.IsInRole(Role.CUSTOMER))
-            {
-                <h1>Welcome To The FPT Book Store </h1>
+            <h1>Welcome To The FPT Book Store </h1>
 
-                <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
-                    Shopping Cart
-                </a>
-                <a asp-controller="Orders" asp-action="Index" class="btn btn-info">
-                    View List of Orders (For Customer)
-                </a>
-                <div class="row card-deck">
-
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-lg-4">
-                            <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
+            <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
+                Shopping Cart
+            </a>
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-info">
+                View List of Orders (For Customer)
+            </a>
+            <div class="row card-deck">
+                @foreach (var item in Model.BookViewModels)
+                {
+                    <div class="col-lg-4">
+                        <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
                      src="@item.ImageUrl"
                      alt="image">
-                            <div class="border border-dark card-body">
-                                <h4 class="card-title"> @item.Title</h4>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Author: @item.Author </li>
-                                    <li class="list-group-item">Price: @item.Price </li>
-                                </ul>
-                                <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
-                                    Details
-                                </a>
-                            </div>
-
+                        <div class="border border-dark card-body">
+                            <h4 class="card-title"> @item.Title</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Author: @item.Author </li>
+                                <li class="list-group-item">Price: @item.Price </li>
+                            </ul>
+                            <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+                                Details
+                            </a>
                         </div>
-                    }
 
-                </div>
-            }
-            if (User.IsInRole(Role.STOREOWNER))
-            {
-                <h1>Welcome To The Page For Store Owner</h1>
-                <a asp-controller="Books" asp-action="Index" class="btn btn-info">
-                    Manage Books
-                </a>
-                <a asp-controller="Categories" asp-action="Index" class="btn btn-info">
-                    Manage Categories
-                </a>
-                <a asp-controller="Stores" asp-action="Index" class="btn btn-info">
-                    View List of Orders (For Store Owner)
-                </a>
-                <div class="row card-deck">
-
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-lg-4">
-                            <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
-                     src="@item.ImageUrl"
-                     alt="image">
-                            <div class="border border-dark card-body">
-                                <h4 class="card-title"> @item.Title</h4>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Author: @item.Author </li>
-                                    <li class="list-group-item">Price: @item.Price </li>
-                                </ul>
-                                <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
-                                    Details
-                                </a>
-                            </div>
-
-                        </div>
-                    }
-
-                </div>
-            }
+                    </div>
+                }
+            </div>
         }
+        else if (User.IsInRole(Role.STOREOWNER))
+        {
+            <h1>Welcome To The Page For Store Owner</h1>
+            <a asp-controller="Books" asp-action="Index" class="btn btn-info">
+                Manage Books
+            </a>
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-info">
+                Manage Categories
+            </a>
+            <a asp-controller="Stores" asp-action="Index" class="btn btn-info">
+                View List of Orders (For Store Owner)
+            </a>
+            <div class="dropdown show">
+                <button id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-bell-fill" style="color:black; font-size:1.5vw;"></i>
+                </button>
+                <table class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    @foreach (var item in Model.Notifications)
+                    {
+                        <tr class="dropdown-item">
+                            @if (item.Decision == "APPROVED")
+                            {
+                                <td class="alert alert-info">
+                                    Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
 
+                                </td>
+                                <td>@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td class="alert alert-danger">
+                                    Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
+
+                                </td>
+                                <td>@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="row card-deck">
+                @foreach (var item in Model.BookViewModels)
+                {
+                    <div class="col-lg-4">
+                        <img class="card-img-top" style="margin-top:10%; width:100%; height: 60vh; object-fit:contain;"
+                     src="@item.ImageUrl"
+                     alt="image">
+                        <div class="border border-dark card-body">
+                            <h4 class="card-title"> @item.Title</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Author: @item.Author </li>
+                                <li class="list-group-item">Price: @item.Price </li>
+                            </ul>
+                            <a style="margin-top:10%;" asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="btn btn-info">
+                                Details
+                            </a>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+        else if (User.IsInRole(Role.ADMIN))
+        {
+            <h1>Welcome To The Page For Administrator</h1>
+            <a asp-controller="Admins" asp-action="Customers" class="btn btn-info">
+                Manage Customers
+            </a>
+            <a asp-controller="Admins" asp-action="StoreOwners" class="btn btn-info">
+                Manage Store Owners
+            </a>
+            <a asp-controller="Admins" asp-action="Index" class="btn btn-info">
+                Category Request
+            </a>
+        }
     </div>
 </div>
 

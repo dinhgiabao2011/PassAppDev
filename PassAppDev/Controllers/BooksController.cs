@@ -53,7 +53,7 @@ namespace PassAppDev.Controllers
 		[HttpGet]
 		public IActionResult Create()
 		{
-			var viewModel = new BookCategoriesVM()
+			var viewModel = new BookCategoriesViewModel()
 			{
 				Categories = _context.Categories
 					.Where(t => t.Status == Enums.CategoryStatus.Approved)
@@ -63,11 +63,11 @@ namespace PassAppDev.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateAsync(BookCategoriesVM viewModel)
+		public async Task<IActionResult> CreateAsync(BookCategoriesViewModel viewModel)
 		{
 			if (!ModelState.IsValid)
 			{
-				viewModel = new BookCategoriesVM
+				viewModel = new BookCategoriesViewModel
 				{
 					Categories = _context.Categories
 						.Where(t => t.Status == Enums.CategoryStatus.Approved)
@@ -120,7 +120,7 @@ namespace PassAppDev.Controllers
 				return NotFound();
 			}
 
-			var viewModel = new BookCategoriesVM
+			var viewModel = new BookCategoriesViewModel
 			{
 				Book = bookInDb,
 				Categories = _context.Categories
@@ -141,7 +141,7 @@ namespace PassAppDev.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(BookCategoriesVM viewModel)
+		public async Task<IActionResult> Edit(BookCategoriesViewModel viewModel)
 		{
 			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == viewModel.Book.Id);
 			if (bookInDb is null)
@@ -151,7 +151,7 @@ namespace PassAppDev.Controllers
 
 			if (!ModelState.IsValid)
 			{
-				viewModel = new BookCategoriesVM
+				viewModel = new BookCategoriesViewModel
 				{
 					Book = viewModel.Book,
 					Categories = _context.Categories

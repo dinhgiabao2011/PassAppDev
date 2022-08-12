@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace PassAppDev.ViewModels
 {
-    public class BookCategoriesVM
+    public class BookCategoriesViewModel
     {
         public Book Book { get; set; }
         public IEnumerable<Category> Categories { get; set; }

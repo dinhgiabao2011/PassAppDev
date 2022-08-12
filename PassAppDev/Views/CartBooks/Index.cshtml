@@ -27,12 +27,12 @@
                 <th scope="row">@item.ApplicationUser.FullName</th>
                 <td>@item.Book.Title</td>
                 <td>@item.Price</td>
-                
+
                 <td>
                     <a asp-controller="CartBooks" asp-action="DecreaseQty" asp-route-id=@item.Id class="btn btn-info">-</a>
                     @item.Quatity
                     <a asp-controller="CartBooks" asp-action="IncreaseQty" asp-route-id=@item.Id class="btn btn-info">+</a>
-                    </td>
+                </td>
                 @{
                     float subtotal = @item.Price * @item.Quatity;
                     total += subtotal;

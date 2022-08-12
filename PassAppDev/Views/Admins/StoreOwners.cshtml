@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Store Owners List In Store</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">User Name</th>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.UserName</th>
+                <td>@item.Email</td>
+                <td>@item.Address</td>
+                <td>
+                    <a asp-controller="Admins" asp-action="ChangeStoreOwnerPassword" asp-route-id=@item.Id class="btn btn-success">
+                        Change Password
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

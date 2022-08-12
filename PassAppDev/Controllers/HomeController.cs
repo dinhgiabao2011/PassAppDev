@@ -20,15 +20,19 @@ namespace PassAppDev.Controllers
 	{
 		private ApplicationDbContext _context;
 		private readonly ILogger<HomeController> _logger;
+		private readonly UserManager<ApplicationUser> _userManager;
+		public HomeController(ApplicationDbContext context, ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _logger = logger;
+            _userManager = userManager;
+        }
 
-		public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
+        public IActionResult Index(string keyWord)
 		{
-			_context = context;
-			_logger = logger;
-		}
-
-		public IActionResult Index(string keyWord)
-		{
+			var currentUserId = _userManager.GetUserId(HttpContext.User);
+			BookNotificationViewModel bookNotification = new BookNotificationViewModel();
+			IEnumerable<Notification> notifications = _context.Notifications.Where(t => t.ApplicationUserId== currentUserId).ToList().Take(10);
 			var bookVMList = new List<BookViewModel>();
 			if (!string.IsNullOrWhiteSpace(keyWord))
 			{
@@ -55,7 +59,9 @@ namespace PassAppDev.Controllers
 					};
 					bookVMList.Add(newbookVM);
 				}
-				return View(bookVMList);
+				bookNotification.BookViewModels = bookVMList.AsEnumerable();
+				bookNotification.Notifications = notifications;
+				return View(bookNotification);
 			}
 
 			IEnumerable<Book> books = _context.Books
@@ -78,7 +84,9 @@ namespace PassAppDev.Controllers
 				};
 				bookVMList.Add(newbookVM);
 			}
-			return View("~/Views/Home/Index.cshtml", bookVMList);
+			bookNotification.BookViewModels = bookVMList.AsEnumerable();
+			bookNotification.Notifications = notifications;
+			return View("~/Views/Home/Index.cshtml", bookNotification);
 		}
 
 
