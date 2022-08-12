@@ -114,5 +114,9 @@ namespace PassAppDev.Controllers
 			return View(bookInDb);
 		}
 
+		public IActionResult HelpList()
+        {
+			return View();
+        }
 	}
 }
