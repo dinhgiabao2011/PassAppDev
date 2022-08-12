@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ namespace PassAppDev.Controllers
 		[HttpGet]
 		public IActionResult Create()
 		{
-			var viewModel = new BookCategoriesVM()
+			var viewModel = new BookCategoriesViewModel()
 			{
 				Categories = _context.Categories
 					.Where(t => t.Status == Enums.CategoryStatus.Approved)
@@ -63,11 +64,11 @@ namespace PassAppDev.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateAsync(BookCategoriesVM viewModel)
+		public async Task<IActionResult> CreateAsync(BookCategoriesViewModel viewModel)
 		{
 			if (!ModelState.IsValid)
 			{
-				viewModel = new BookCategoriesVM
+				viewModel = new BookCategoriesViewModel
 				{
 					Categories = _context.Categories
 						.Where(t => t.Status == Enums.CategoryStatus.Approved)
@@ -120,7 +121,7 @@ namespace PassAppDev.Controllers
 				return NotFound();
 			}
 
-			var viewModel = new BookCategoriesVM
+			var viewModel = new BookCategoriesViewModel
 			{
 				Book = bookInDb,
 				Categories = _context.Categories
@@ -130,18 +131,14 @@ namespace PassAppDev.Controllers
 
 			};
 
-			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-			ViewBag.ImageData = image;
+			ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 
 			return View(viewModel);
 
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(BookCategoriesVM viewModel)
+		public async Task<IActionResult> Edit(BookCategoriesViewModel viewModel)
 		{
 			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == viewModel.Book.Id);
 			if (bookInDb is null)
@@ -151,12 +148,14 @@ namespace PassAppDev.Controllers
 
 			if (!ModelState.IsValid)
 			{
-				viewModel = new BookCategoriesVM
+				viewModel = new BookCategoriesViewModel
 				{
 					Book = viewModel.Book,
 					Categories = _context.Categories
-						.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
+						.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList(),
 				};
+
+				ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 				return View(viewModel);
 			}
 			bookInDb.Title = viewModel.Book.Title;
@@ -192,13 +191,19 @@ namespace PassAppDev.Controllers
 				return NotFound();
 			}
 
-
-			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-			ViewBag.ImageData = image;
+			ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 			return View(bookInDb);
 		}
+
+
+
+		[NonAction]
+		private string ConvertByteArrayToStringBase64(byte[] imageArray)
+		{
+			string imageBase64Data = Convert.ToBase64String(imageArray);
+
+			return string.Format("data:image/jpg;base64, {0}", imageBase64Data);
+		}
 	}
+
 }

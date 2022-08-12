@@ -32,6 +32,16 @@
                             <input class="form-control" type="text" name="keyWord" placeholder="Search by Category" />
                         <button  type ="submit" class="btn"><i style="font-size:1.5vw;" type="submit" class="bi bi-search"></i></button>
                         </form>
+                    } else if (User.IsInRole(Role.STOREOWNER))
+                    {
+                        <form 
+                            asp-controller="Stores"
+                            asp-action="SearchUser"
+                            method="GET"
+                            style="margin-right:2vw;" class="form-inline my-2 my-lg-0">
+                            <input class="form-control" type="text" name="email" placeholder="Search Customers" />
+                        <button  type ="submit" class="btn"><i style="font-size:1.5vw;" type="submit" class="bi bi-search"></i></button>
+                        </form>
                     }
 
                     <ul class="navbar-nav flex-grow-1">

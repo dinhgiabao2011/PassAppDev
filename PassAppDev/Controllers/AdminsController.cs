@@ -127,14 +127,14 @@ namespace PassAppDev.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Customers()
+		public IActionResult Customers()
 		{
 			var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
 			return View(customer);
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> StoreOwner()
+		public IActionResult StoreOwners()
 		{
 			var storeOwner = _userManager.GetUsersInRoleAsync(Role.STOREOWNER).Result;
 			return View(storeOwner);
