@@ -72,6 +72,7 @@ namespace PassAppDev.Controllers
 		{
       IEnumerable<OrderedBook> orderedBooks = _context.OrderedBooks
                                               .Include(t=>t.Order)
+                                              .Include(t=>t.Book)
                                               .Where(t=>t.OrderId==id)
                                               .ToList();
       return View(orderedBooks);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassAppDev.Data;
 
 namespace PassAppDev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220812040229_final")]
+    partial class final
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,14 +266,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "356bb56f-b8df-4273-839e-d676d736bb72",
+                            ConcurrencyStamp = "31b00710-b0c7-4693-961d-7af430e0191d",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAELPlzKEdehItApQLFAK3iBQ24UMkWHZD9C+UmyvEEEkMstcku+479JY1ienNO3ei7A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJUM9Q6vNKUqH2d9p5MuG6vKDPgD8zo0KbI1HWBpkdDmeh1Qk8FQqbfnmDw3zvodLQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1b08500a-13ed-47ab-85dc-6d928fe5bba8",
+                            SecurityStamp = "49cce7ec-f2cb-438a-898d-d43d80060c2a",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         },
@@ -279,14 +281,14 @@ namespace PassAppDev.Data.Migrations
                         {
                             Id = "a0554bfd-1d4d-4a61-97d4-d827530e6883",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dbf0de2f-9f0d-4222-a4ff-7b59ade52f1d",
+                            ConcurrencyStamp = "5c8119d8-c809-41a3-bd5a-3780e52b66f7",
                             Email = "store@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEGk1ctY8ZVL/IWUx4YiZ96MxNXwa9KfN7Ytwush7RplJjmcR5yUPC9L9mFApHSg1Pw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJKRFsvqdixPhWhorTc1bTEVYEycAY2cHZLuxJY03yWI5eOTolGRv6E8uSEIlroi2g==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3080d339-ca22-4664-8972-a511ef0d0df1",
+                            SecurityStamp = "19207b01-d9d4-40fd-b95c-e91b1072b038",
                             TwoFactorEnabled = false,
                             UserName = "store@gmail.com"
                         });

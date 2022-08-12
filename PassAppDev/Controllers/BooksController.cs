@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using PassAppDev.Data;
 using PassAppDev.Models;
 using PassAppDev.Utils;
@@ -15,185 +16,189 @@ using System.Threading.Tasks;
 
 namespace PassAppDev.Controllers
 {
-  [Authorize(Roles = Role.STOREOWNER)]
-  public class BooksController : Controller
-    {
-        private ApplicationDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
-    public BooksController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
-        {
-            _context = context;
-      _userManager = userManager;
-    }
+	[Authorize(Roles = Role.STOREOWNER)]
+	public class BooksController : Controller
+	{
+		private ApplicationDbContext _context;
+		private readonly UserManager<ApplicationUser> _userManager;
+		public BooksController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+		{
+			_context = context;
+			_userManager = userManager;
+		}
 
-        [HttpGet]
-        public IActionResult Index(string keyWord)
-        {
+		[HttpGet]
+		public IActionResult Index(string keyWord)
+		{
 
-          if (!string.IsNullOrWhiteSpace(keyWord))
-          {
-            var result = _context.Books
-              .Include(t => t.Category)
-              .Where(t => t.Category.Name.Contains(keyWord)
-                  || t.Title.Contains(keyWord)
-              )
-              .ToList();
+			if (!string.IsNullOrWhiteSpace(keyWord))
+			{
+				var result = _context.Books
+					.Include(t => t.Category)
+					.Where(t => t.Category.Name.Contains(keyWord)
+							|| t.Title.Contains(keyWord)
+					)
+					.ToList();
 
-            return View(result);
-          }
+				return View(result);
+			}
 
-          IEnumerable<Book> books = _context.Books
-            .Include(t => t.Category)
-            .ToList();
+			IEnumerable<Book> books = _context.Books
+				.Include(t => t.Category)
+				.ToList();
 
-          return View(books);
-        }
+			return View(books);
+		}
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            var viewModel = new BookCategoriesVM()
-            {
-                Categories = _context.Categories
-                .Where(t=>t.Status==Enums.CategoryStatus.Approved)             
-                .ToList()
-            };
-            return View(viewModel);
-        }
+		[HttpGet]
+		public IActionResult Create()
+		{
+			var viewModel = new BookCategoriesVM()
+			{
+				Categories = _context.Categories
+					.Where(t => t.Status == Enums.CategoryStatus.Approved)
+					.ToList()
+			};
+			return View(viewModel);
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(BookCategoriesVM viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                viewModel = new BookCategoriesVM
-                {
-                    Categories = _context.Categories
-                    .Where(t => t.Status == Enums.CategoryStatus.Approved)
-                    .ToList()
-                };
-                return View(viewModel);
-            }
+		[HttpPost]
+		public async Task<IActionResult> CreateAsync(BookCategoriesVM viewModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				viewModel = new BookCategoriesVM
+				{
+					Categories = _context.Categories
+						.Where(t => t.Status == Enums.CategoryStatus.Approved)
+						.ToList()
+				};
+				return View(viewModel);
+			}
 
-         using (var memoryStream = new MemoryStream())  
-           {
-              await viewModel.FormFile.CopyToAsync(memoryStream);
+			using (var memoryStream = new MemoryStream())
+			{
+				await viewModel.FormFile.CopyToAsync(memoryStream);
 
-              var newBook = new Book
-              {
-                Title = viewModel.Book.Title,
-                Author = viewModel.Book.Author,
-                Price = viewModel.Book.Price,
-                Description = viewModel.Book.Description,
-                CategoryId = viewModel.Book.CategoryId,
-                ImageData = memoryStream.ToArray()
-              };
+				var newBook = new Book
+				{
+					Title = viewModel.Book.Title,
+					Author = viewModel.Book.Author,
+					Price = viewModel.Book.Price,
+					Description = viewModel.Book.Description,
+					CategoryId = viewModel.Book.CategoryId,
+					ImageData = memoryStream.ToArray()
+				};
 
-          _context.Add(newBook);
-          await _context.SaveChangesAsync();
-           }
+				_context.Add(newBook);
+				await _context.SaveChangesAsync();
+			}
 
-              return RedirectToAction("Index");
-          }
+			return RedirectToAction("Index");
+		}
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
-            if (bookInDb is null)
-            {
-                return NotFound();
-            }
+		[HttpGet]
+		public IActionResult Delete(int id)
+		{
+			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
+			if (bookInDb is null)
+			{
+				return NotFound();
+			}
 
-            _context.Books.Remove(bookInDb);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
+			_context.Books.Remove(bookInDb);
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-          {
-              var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
-              if (bookInDb is null)
-              {
-                return NotFound();
-              }
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == id);
+			if (bookInDb is null)
+			{
+				return NotFound();
+			}
 
-              var viewModel = new BookCategoriesVM
-              {
-                Book = bookInDb,
-                Categories = _context.Categories
-                  .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
-
-
-
-              };
-
-              string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-              string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-              ViewBag.ImageData = image;
-
-            return View(viewModel);
-
-          }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(BookCategoriesVM viewModel)
-        {
-            var bookInDb = _context.Books.SingleOrDefault(t => t.Id == viewModel.Book.Id);
-            if (bookInDb is null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-              viewModel = new BookCategoriesVM
-              {
-                Book = viewModel.Book,
-                Categories = _context.Categories
-                  .Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
-              };
-              return View(viewModel);
-            }
-            bookInDb.Title = viewModel.Book.Title;
-            bookInDb.Author = viewModel.Book.Author;
-            bookInDb.Price = viewModel.Book.Price;
-            bookInDb.Description = viewModel.Book.Description;
-            bookInDb.CategoryId = viewModel.Book.CategoryId;
+			var viewModel = new BookCategoriesVM
+			{
+				Book = bookInDb,
+				Categories = _context.Categories
+					.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
 
 
-       using (var memoryStream = new MemoryStream())
-      
-              {
-                await viewModel.FormFile.CopyToAsync(memoryStream);
 
-              if (memoryStream != null)
-                 bookInDb.ImageData = memoryStream.ToArray();
-             } 
-              await _context.SaveChangesAsync();
-           return RedirectToAction("Index");
-        }
+			};
 
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            var bookInDb = _context.Books.Include(t => t.Category)
-                .SingleOrDefault(t => t.Id == id);
-            if (bookInDb is null)
-            {
-                return NotFound();
-            }
+			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
+
+			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+			ViewBag.ImageData = image;
+
+			return View(viewModel);
+
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(BookCategoriesVM viewModel)
+		{
+			var bookInDb = _context.Books.SingleOrDefault(t => t.Id == viewModel.Book.Id);
+			if (bookInDb is null)
+			{
+				return BadRequest();
+			}
+
+			if (!ModelState.IsValid)
+			{
+				viewModel = new BookCategoriesVM
+				{
+					Book = viewModel.Book,
+					Categories = _context.Categories
+						.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
+				};
+				return View(viewModel);
+			}
+			bookInDb.Title = viewModel.Book.Title;
+			bookInDb.Author = viewModel.Book.Author;
+			bookInDb.Price = viewModel.Book.Price;
+			bookInDb.Description = viewModel.Book.Description;
+			bookInDb.CategoryId = viewModel.Book.CategoryId;
 
 
-            string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
+			if (viewModel.FormFile != null)
+			{
+				using (var memoryStream = new MemoryStream())
 
-            string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+				{
+					await viewModel.FormFile.CopyToAsync(memoryStream);
 
-            ViewBag.ImageData = image;
-      return View(bookInDb);
-        }
-    }
+					if (memoryStream != null)
+						bookInDb.ImageData = memoryStream.ToArray();
+				}
+				
+			}
+			await _context.SaveChangesAsync();
+			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
+		public IActionResult Details(int id)
+		{
+			var bookInDb = _context.Books.Include(t => t.Category)
+					.SingleOrDefault(t => t.Id == id);
+			if (bookInDb is null)
+			{
+				return NotFound();
+			}
+
+
+			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
+
+			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
+
+			ViewBag.ImageData = image;
+			return View(bookInDb);
+		}
+	}
 }
