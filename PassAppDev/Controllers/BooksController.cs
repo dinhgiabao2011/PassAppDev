@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -130,11 +131,7 @@ namespace PassAppDev.Controllers
 
 			};
 
-			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-			ViewBag.ImageData = image;
+			ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 
 			return View(viewModel);
 
@@ -155,8 +152,10 @@ namespace PassAppDev.Controllers
 				{
 					Book = viewModel.Book,
 					Categories = _context.Categories
-						.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList()
+						.Where(t => t.Status == Enums.CategoryStatus.Approved).ToList(),
 				};
+
+				ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 				return View(viewModel);
 			}
 			bookInDb.Title = viewModel.Book.Title;
@@ -192,13 +191,19 @@ namespace PassAppDev.Controllers
 				return NotFound();
 			}
 
-
-			string imageBase64 = Convert.ToBase64String(bookInDb.ImageData);
-
-			string image = string.Format("data:image/jpg;base64, {0}", imageBase64);
-
-			ViewBag.ImageData = image;
+			ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 			return View(bookInDb);
 		}
+
+
+
+		[NonAction]
+		private string ConvertByteArrayToStringBase64(byte[] imageArray)
+		{
+			string imageBase64Data = Convert.ToBase64String(imageArray);
+
+			return string.Format("data:image/jpg;base64, {0}", imageBase64Data);
+		}
 	}
+
 }

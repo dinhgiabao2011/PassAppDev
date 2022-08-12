@@ -19,78 +19,52 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace PassAppDev.Controllers
 {
-	[Authorize(Roles = Role.STOREOWNER)]
-	public class StoresController : Controller
-	{
-		private readonly ApplicationDbContext _context;
-		private readonly UserManager<ApplicationUser> _userManager;
-		public StoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
-		{
-			_context = context;
-			_userManager = userManager;
+    [Authorize(Roles = Role.STOREOWNER)]
+    public class StoresController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        public StoresController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
 
-		}
-		public IActionResult Index()
-		{
+        }
+        public IActionResult Index()
+        {
 
-			IEnumerable<Order> orders = _context.Orders
-								.Include(t => t.ApplicationUser)
-								.ToList();
-			return View(orders);
-		}
-		[HttpGet]
-		public IActionResult Details(int id)
-		{
-			IEnumerable<OrderedBook> orderedBooks = _context.OrderedBooks
-																							.Include(t => t.Order)
-																							.Include(t => t.Book)
-																							.Where(t => t.OrderId == id)
-																							.ToList();
-			return View(orderedBooks);
-		}
+            IEnumerable<Order> orders = _context.Orders
+                                .Include(t => t.ApplicationUser)
+                                .ToList();
+            return View(orders);
+        }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            IEnumerable<OrderedBook> orderedBooks = _context.OrderedBooks
+                                                                                            .Include(t => t.Order)
+                                                                                            .Include(t => t.Book)
+                                                                                            .Where(t => t.OrderId == id)
+                                                                                            .ToList();
+            return View(orderedBooks);
+        }
 
-		public async Task<IActionResult> SearchUser(string email)
-		{
-			var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
-
-
-			if (!string.IsNullOrWhiteSpace(email))
-			{
-
-				var result = customer
-									.Where(t => t.Email.Contains(email)
-							)
-									.ToList();
-
-				return View(result);
-			}
+        public IActionResult SearchUser(string email)
+        {
+            var customer = _userManager.GetUsersInRoleAsync(Role.CUSTOMER).Result;
 
 
-			return View(customer);
+            if (!string.IsNullOrWhiteSpace(email))
+            {
 
-		}
+                var result = customer.Where(t => t.Email.Contains(email)).ToList();
 
-		//public IActionResult GetNotification()
-		//{
-		//	var notiVMList = new List<NotificationVM>();
+                return View(result);
+            }
 
-		//	IEnumerable<Notification> notifications = _context.Notifications.ToList();
 
-		//	foreach (var noti in notifications)
+            return View(customer);
 
-		//	{
-		//		var notificationViewModel = new NotificationVM()
-		//		{
-		//			CategoryName = noti.CategoryName,
-		//			Decision = noti.Decision,
-		//			Action = noti.Action,
-		//			NotifiedAt = noti.NotifiedAt,
-		//	};
-		//		notiVMList.Add(notificationViewModel);
-		//	}
-
-		//	return View("~/Views/Stores/Index.cshtml", notiVMList);
-
-		//}
-	}
+        }
+    }
 }
