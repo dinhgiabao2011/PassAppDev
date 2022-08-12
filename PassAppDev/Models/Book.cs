@@ -15,8 +15,9 @@ namespace PassAppDev.Models
         [Required(ErrorMessage = "Author cannot be null ...")]
         [StringLength(100)]
         public string Author { get; set; }
-
+        
         [Required(ErrorMessage = "Price cannot be null ...")]
+		    [Range(0,999999999)]
         public float Price { get; set; }
 
         [Required(ErrorMessage = "Description cannot be null ...")]
