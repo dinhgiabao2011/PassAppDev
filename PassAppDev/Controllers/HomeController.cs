@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
 using PassAppDev.Data;
 using PassAppDev.Models;
 using PassAppDev.ViewModels;
@@ -66,7 +67,7 @@ namespace PassAppDev.Controllers
 				string imageBase64 = Convert.ToBase64String(book.ImageData);
 
 				string image = string.Format("data:image/jpg;base64,{0}", imageBase64);
-		
+
 				var newbookVM = new BookViewModel()
 				{
 					Title = book.Title,
@@ -79,6 +80,7 @@ namespace PassAppDev.Controllers
 			}
 			return View("~/Views/Home/Index.cshtml", bookVMList);
 		}
+
 
 		public IActionResult Privacy()
 		{

@@ -22,13 +22,17 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     @if (User.IsInRole(Role.CUSTOMER) || (!User.Identity.IsAuthenticated))
-                {
-                    <form style="margin-right:2vw;"class="form-inline my-2 my-lg-0">
-
-                        <input class="form-control" type="text" name="keyWord" placeholder="Search by Category" />
-                        <button class="btn"><i style="font-size:1.5vw;" asp-controller="Home" type="submit" class="bi bi-search"></i></button>
-                    </form>
-                }
+                    {
+                        
+                        <form 
+                            asp-controller="Home"
+                            asp-action="Index"
+                            method="GET"
+                            style="margin-right:2vw;" class="form-inline my-2 my-lg-0">
+                            <input class="form-control" type="text" name="keyWord" placeholder="Search by Category" />
+                        <button  type ="submit" class="btn"><i style="font-size:1.5vw;" type="submit" class="bi bi-search"></i></button>
+                        </form>
+                    }
 
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -40,8 +44,8 @@
                     </ul>
                 </div>
             </div>
-                
-            
+
+
         </nav>
     </header>
     <div class="container">

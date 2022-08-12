@@ -202,7 +202,11 @@ namespace PassAppDev.Controllers
 				return View(userInDb);
 			}
 
-			userInDb.PasswordHash = passwordHasher.HashPassword(null, user.PasswordHash);
+			if (user.PasswordHash != null)
+			{
+				userInDb.PasswordHash = passwordHasher.HashPassword(null, user.PasswordHash);
+			}
+			
 			_context.SaveChanges();
 
 			return RedirectToAction("StoreOwner");
