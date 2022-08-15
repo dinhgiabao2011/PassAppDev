@@ -22,17 +22,17 @@ namespace PassAppDev.Controllers
 		private readonly ILogger<HomeController> _logger;
 		private readonly UserManager<ApplicationUser> _userManager;
 		public HomeController(ApplicationDbContext context, ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
-        {
-            _context = context;
-            _logger = logger;
-            _userManager = userManager;
-        }
+		{
+			_context = context;
+			_logger = logger;
+			_userManager = userManager;
+		}
 
-        public IActionResult Index(string keyWord)
+		public IActionResult Index(string keyWord)
 		{
 			var currentUserId = _userManager.GetUserId(HttpContext.User);
 			BookNotificationViewModel bookNotification = new BookNotificationViewModel();
-			IEnumerable<Notification> notifications = _context.Notifications.Where(t => t.ApplicationUserId== currentUserId).ToList().Take(10);
+			IEnumerable<Notification> notifications = _context.Notifications.Where(t => t.ApplicationUserId == currentUserId).ToList();
 			var bookVMList = new List<BookViewModel>();
 			if (!string.IsNullOrWhiteSpace(keyWord))
 			{
@@ -110,13 +110,21 @@ namespace PassAppDev.Controllers
 			{
 				return NotFound();
 			}
-
+			ViewBag.ImageData = ConvertByteArrayToStringBase64(bookInDb.ImageData);
 			return View(bookInDb);
 		}
 
 		public IActionResult HelpList()
-        {
+		{
 			return View();
-        }
+		}
+
+		[NonAction]
+		private string ConvertByteArrayToStringBase64(byte[] imageArray)
+		{
+			string imageBase64Data = Convert.ToBase64String(imageArray);
+
+			return string.Format("data:image/jpg;base64, {0}", imageBase64Data);
+		}
 	}
 }
