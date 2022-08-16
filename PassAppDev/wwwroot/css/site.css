@@ -261,3 +261,12 @@ body {
     .search-btn:hover {
         color: #F06E28;
     }
+
+.btn {
+   border-radius:8px;
+}
+
+label {
+    color: #F06E28;
+    
+}

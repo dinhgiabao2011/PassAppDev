@@ -3,22 +3,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Customer List Of User In System</h1>
+ <h1 class="text-center text-capitalize" style="color: #034ea2; font-size:4vw;">List Of Customer</h1>
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Name</th>
-            <th scope="col">Address</th>
+            <th class="text-center" scope="col">Customer Email</th>
+            <th class="text-center" scope="col">Customer Name</th>
+            <th class="text-center" scope="col">Customer Address</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <th scope="row">@item.UserName</th>
-                <td>@item.FullName</td>
-                <td>@item.Address</td>
+                <th class="text-center" scope="row">@item.UserName</th>
+                <td class="text-center">@item.FullName</td>
+                <td class="text-center">@item.Address</td>
             </tr>
         }
 
