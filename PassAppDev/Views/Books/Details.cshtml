@@ -1,13 +1,30 @@
 ﻿@model Book
 
 <div class="form-group">
-  <a asp-controller="Books" asp-action="Index" class="btn btn-primary">
-    Back to Index
-  </a>
+
 </div>
-    <img src="@ViewBag.ImageData"/>
-    <h4>@Model.Title</h4>
-    <p>Author: @Model.Author</p>
-    <p>Price: @Model.Price</p>
-    <p>Category: @Model.Category.Name</p>
-    <p>Description: @Model.Description</p>
+    <div class="col-sm-6 mx-auto">
+    <img class="card-img-top border-top border-right border-left" style=" object-fit:contain;"
+         src="@ViewBag.ImageData"
+         alt="image">
+    <div class="card-body text-left border-right border-left border-bottom">
+        <a asp-controller="Home" asp-action="BookDetails" asp-route-id=@Model.Id class="card-link book-title">
+            <h2 class="card-title"> @Model.Title</h2>
+        </a>
+        <p class="card-text">@Model.Description</p>
+        <h5 class="card-text book-author">Author: @Model.Author </h5>
+        <h5 class="card-text book-author">Category: @Model.Category.Name </h5>
+        <h5 class="card-text book-price">Price: @Model.Price VND</h5>
+        <div class="d-flex justify-content-around" style="margin-top:1rem;">
+            
+        </div>
+    </div>
+
+</div>
+<div class="form-group d-flex justify-content-around">
+    <a style="margin-top:5%; margin-left: 2%; font-size:1.3vw;" asp-controller="Books" asp-action="Index" class="btn btn-danger">
+        Back
+    </a>
+    <a style="font-size:1.3vw;" asp-controller="Books" asp-action="Edit" asp-route-id=@Model.Id class="btn btn-info float-left cart-button">
+         <i class="bi bi-pencil-square"></i> Edit</a>
+</div>

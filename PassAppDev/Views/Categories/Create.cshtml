@@ -1,14 +1,16 @@
 ﻿@model Category
 
-<h1>Create a new Category</h1>
+ <h1 class="text-center text-capitalize" style="color: #034ea2; font-size:4vw;">Create A New Category</h1>
 
-<form asp-controller="Categories" asp-action="Create" method="post">
-  <div class="form-group">
+<form asp-controller="Categories" asp-action="Create" method="post" style="width:55%;margin-left:18vw;">
+  <div class="form-group font-weight-bold h5">
     <label>Category Name</label>
-    <input asp-for="Name" class="form-control" placeholder="Category Name ..." />
-    <span asp-validation-for="Name" class="text-danger"></span>
+    <input asp-for="Name" class="form-control" placeholder="Category Name " />
+    <span asp-validation-for="Name" class="text-danger font-weight-normal"></span>
   </div>
-  <div class="form-group">
+ 
+    <div class="form-group d-flex justify-content-between">
+      <button type="reset" class="btn btn-danger">Cancel</button>
     <button type="submit" class="btn btn-primary">Create</button>
   </div>
 </form>

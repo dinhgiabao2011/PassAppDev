@@ -3,56 +3,58 @@
 @using PassAppDev.Models
 @model BookCategoriesViewModel
 
-<h1>Edit a Books</h1>
+ <h1 class="text-center text-capitalize" style="color: #034ea2; font-size:4vw;">Edit Book Information</h1>
 
-<form enctype="multipart/form-data" asp-controller="Books" asp-action="Edit" method="post">
+<form enctype="multipart/form-data" asp-controller="Books" asp-action="Edit" method="post" style="width:55%;margin-left:16vw;">
     <input asp-for="Book.Id" type="hidden" value="@Model.Book.Id" />
-    <div class="form-group">
-        <label>Title</label>
+    <div class="form-group font-weight-bold h5">
+        <label>New Title</label>
         <input asp-for="Book.Title" class="form-control" placeholder="Title ..." />
-        <span asp-validation-for="Book.Title" class="text-danger"></span>
+        <span asp-validation-for="Book.Title" class="text-danger font-weight-normal"></span>
     </div>
-    <div class="form-group">
-        <label>Author</label>
+    <div class="form-group font-weight-bold h5">
+        <label>New Author</label>
         <input asp-for="Book.Author" class="form-control" placeholder="Author ..." />
-        <span asp-validation-for="Book.Author" class="text-danger"></span>
+        <span asp-validation-for="Book.Author" class="text-danger font-weight-normal"></span>
     </div>
-    <div class="form-group">
-        <label>Price</label>
+    <div class="form-group font-weight-bold h5">
+        <label>New Price</label>
         <input asp-for="Book.Price" class="form-control" placeholder="Price ..." />
-        <span asp-validation-for="Book.Price" class="text-danger"></span>
+        <span asp-validation-for="Book.Price" class="text-danger font-weight-normal"></span>
     </div>
-    <div class="form-group">
-        <label>Description</label>
+    <div class="form-group font-weight-bold h5">
+        <label>New Description</label>
         <input asp-for="Book.Description" class="form-control" placeholder="Description ..." />
-        <span asp-validation-for="Book.Description" class="text-danger"></span>
+        <span asp-validation-for="Book.Description" class="text-danger font-weight-normal"></span>
     </div>
-    <div class="form-group">
-        <label>Category</label>
+    <div class="form-group font-weight-bold h5">
+        <label>New Category</label>
         <select asp-for="Book.CategoryId"
                 asp-items="@(new SelectList(Model.Categories, "Id", "Name"))"
                 class="form-control">
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group font-weight-bold h5">
         <label>Current Image</label>
-        <img class="form-control rounded" style=" height:60%; width: 40%; object-fit: contain; border: none;"
+        <img class="form-control rounded" style=" height:60%; width: 50%; object-fit: contain; border: none;"
              src="@ViewBag.ImageData"
              alt="image">
     </div>
     <div class="form-group">
-        <label>New Image</label>
+        <label class="font-weight-bold h5">New Image</label>
         <dl>
             <dt>
-                <label asp-for="@Model.FormFile"><i class="bi bi-file-earmark-arrow-up-fill"></i>Upload</label>
+                <label style="color:black;" asp-for="@Model.FormFile">Choose File</label>
             </dt>
             <dd>
                 <input asp-for="@Model.FormFile" type="file">
             </dd>
         </dl>
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Edit</button>
+    <div class="form-group  d-flex justify-content-between">
+        <button type="reset" class="btn btn-danger">Cancel</button>
+        <button type="submit" class="btn btn-primary"
+        onclick="return confirm('Are you sure you want to update for the book: @Model.Book.Title?')">Confirm</button>
     </div>
 </form>
 

@@ -4,16 +4,16 @@
 @model IEnumerable<PassAppDev.Models.OrderedBook>
 
 
-<h1>List of Orders Book Detail</h1>
+<h1 class="text-center text-capitalize" style="color: #034ea2; font-size:3.5vw;">List Of Order Detail</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Book Title</th>
-            <th scope="col">Price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Subtotal</th>
+            <th class="text-center" scope="col">Order ID</th>
+            <th class="text-center" scope="col">Book Title</th>
+            <th class="text-center" scope="col">Price</th>
+            <th class="text-center" scope="col">Quantity</th>
+            <th class="text-center" scope="col">Subtotal</th>
         </tr>
     </thead>
     <tbody>
@@ -24,24 +24,26 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.OrderId</td>
-                <td>@item.Book.Title</td>
-                <td>@item.Price</td>
-                <td>@item.Quantity</td>
+                <td class="text-center">@item.OrderId</td>
+                <td class="text-center">@item.Book.Title</td>
+                <td class="text-center">@item.Price</td>
+                <td class="text-center">@item.Quantity</td>
                 @{
                     float subtotal = @item.Price * @item.Quantity;
                     total += subtotal;
                     totalQty += item.Quantity;
                 }
-                <td>@subtotal</td>
+                <td class="text-center">@subtotal</td>
             </tr>
 
         }
         <tr>
-            <th>Total:</th>
-            <td colspan="2"></td>
-            <td>@totalQty</td>
-            <td colspan="2">@total</td>
+            <th class="text-center">Total:</th>
+            <td class="text-center" colspan="2"></td>
+            <td class="text-center">@totalQty</td>
+            <td class="text-center" colspan="2">@total VND</td>
         </tr>
+         
     </tbody>
 </table>
+
