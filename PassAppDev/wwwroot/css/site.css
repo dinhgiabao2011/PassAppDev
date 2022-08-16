@@ -87,142 +87,122 @@ body {
         color: #034ea2;
     }
 
- 
-       
+
+
 @keyframes animateAbove {
     5% {
         content: "W\220E";
-        
     }
 
     10% {
         content: "We\220E";
-        
     }
+
     15% {
         content: "Wel\220E";
-        
     }
 
     20% {
         content: "Welc\220E";
-        
     }
 
     25% {
         content: "Welco\220E";
-        
     }
 
     30% {
         content: "Welcom\220E";
-        
     }
 
     35% {
         content: "Welcome\220E";
-       
     }
 
     40% {
         content: "Welcome t\220E";
-       
     }
 
     45% {
         content: "Welcome to\220E";
-        
     }
 
     50% {
         content: "Welcome to \220E";
-        
     }
+
     55% {
         content: "Welcome to F\220E";
-       
     }
+
     60% {
         content: "Welcome to FP\220E";
-        
     }
+
     65% {
         content: "Welcome to FPT\220E";
-       
     }
 
     70% {
         content: "Welcome to FPT \220E";
-        
     }
 
     75% {
         content: "Welcome to FPT B\220E";
-       
     }
 
     80% {
         content: "Welcome to FPT Bo\220E";
-        
     }
 
     85% {
         content: "Welcome to FPT Boo\220E";
-        
     }
 
     90% {
         content: "Welcome to FPT Book \220E";
-        
     }
 
     95% {
         content: "Welcome to FPT Book St\220E";
-       
     }
 
     100% {
         content: "Welcome to FPT Book Stor\220E";
-       
     }
 }
 
-#carousel-img {
-    height: 30vw;
-    object-fit: cover;
-}
 
 .book-title {
-   color: #2D3791;
+    color: #2D3791;
 }
 
-.book-title:hover {
-  color: #F06E28;
-}
+    .book-title:hover {
+        color: #F06E28;
+    }
 
 .book-author {
-  margin: 7% 0 7% 0%;
+    margin: 7% 0 7% 0%;
 }
 
 .btn-info {
     background-color: #034ea2;
     border-color: #034ea2;
 }
-.btn-info:hover {
-    font-size:1.1rem;
-    background-color: #F06E28;
-    border-color: #F06E28;
-}
 
-.cart-button {  
+    .btn-info:hover {
+        background-color: #F06E28;
+        border-color: #F06E28;
+    }
+
+.cart-button {
     font-size: 20px;
     margin-top: 5%;
-  
 }
+
 .card-body {
     border-radius: 0 0 16px 16px;
-
 }
+
 .greeting-by-role {
     font-size: 2vw;
     font-weight: 500;
@@ -235,3 +215,49 @@ body {
     font-family: 'PT Sans', sans-serif;
     color: #034ea2;
 }
+
+
+.rounded-pill {
+    width: 50%;
+}
+
+.bi-cart4 {
+    font-size: 1.2vw;
+}
+
+.navbar-text {
+    font-size: 1.2vw;
+    text-decoration: none;
+}
+
+.quantity-edit-btn {
+    font-size: 1.3vw;
+    color: black;
+}
+
+    .quantity-edit-btn:hover {
+        text-decoration: none;
+    }
+
+#dropdownMenuLink {
+    color: #034ea2;
+}
+
+    #dropdownMenuLink:hover {
+        color: #F06E28;
+        cursor: pointer;
+        position: relative;
+        top: -2px;
+    }
+
+.search-btn {
+    margin-left: 5px;
+    background-color: #fff;
+    font-size: 1.4vw;
+    border: none;
+    color: #034ea2;
+}
+
+    .search-btn:hover {
+        color: #F06E28;
+    }
