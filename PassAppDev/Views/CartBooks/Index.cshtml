@@ -2,18 +2,19 @@
     ViewData["Title"] = "Index";
 }
 @model IEnumerable<PassAppDev.Models.CartBook>
-<h1>Your Shopping Cart</h1>
+
+<h1 class="text-center text-capitalize" style="color: #034ea2; font-size:3.5vw;">Your Shopping Cart</h1>
 <table class="table">
     <thead>
         <tr>
-            <th class="text-center h5" scope="col">User Name</th>
-            <th class="text-center h5" scope="col">Tile</th>
-            <th class="text-center h5" scope="col">Price</th>
-            <th class="text-center h5" scope="col"></th>
-            <th class="text-center h5" scope="col">Quantity</th>
-            <th class="text-center h5" scope="col"></th>
-            <th class="text-center h5" scope="col">Subtotal</th>
-            <th class="text-center h5" scope="col">Action</th>
+            <th class="text-center" scope="col">User Name</th>
+            <th class="text-center" scope="col">Tile</th>
+            <th class="text-center " scope="col">Price</th>
+            <th class="text-center " scope="col"></th>
+            <th class="text-center " scope="col">Quantity</th>
+            <th class="text-center " scope="col"></th>
+            <th class="text-center " scope="col">Subtotal</th>
+            <th class="text-center " scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -56,8 +57,8 @@
         </tr>
     </tbody>
 </table>
-<a asp-controller="Orders" asp-action="Order" class="btn btn-success">
-    Confirm Order
+<a asp-controller="Orders" asp-action="Order" class="btn btn-primary" style="margin-left:80%;">
+    Confirm
 </a>
 
 

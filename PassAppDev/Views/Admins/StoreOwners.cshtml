@@ -2,25 +2,24 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Store Owners List In Store</h1>
+<h1 class="text-center text-capitalize" style="color: #034ea2; font-size:3.5vw;">List Of Store Owners</h1>
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">User Name</th>
-            <th scope="col">Name</th>
-            <th scope="col">Address</th>
+            <th class="text-center" scope="col">User Email</th>
+
+            <th class="text-center" scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <th scope="row">@item.UserName</th>
-                <td>@item.Email</td>
-                <td>@item.Address</td>
-                <td>
-                    <a asp-controller="Admins" asp-action="ChangeStoreOwnerPassword" asp-route-id=@item.Id class="btn btn-success">
-                        Change Password
+                <th class="text-center" scope="row">@item.UserName</th>
+                
+                <td class="text-center">
+                    <a asp-controller="Admins" asp-action="ChangeStoreOwnerPassword" asp-route-id=@item.Id class="btn btn-primary">
+                       <i class="bi bi-pencil-square"></i> Change Password
                     </a>
                 </td>
             </tr>
