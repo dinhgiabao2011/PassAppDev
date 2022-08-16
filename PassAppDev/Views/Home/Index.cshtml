@@ -8,16 +8,35 @@
 
     <div class="text-center">
 
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="height:27vw;object-fit:cover;">
+                    <img class="d-block w-100 carousel-img" src="https://tinyurl.com/5n79nb34" alt="First slide">
+                </div>
+                <div class="carousel-item" style="height:27vw;object-fit:cover;">
+                    <img class="d-block w-100 carousel-img" src="https://tinyurl.com/5fr6zj2y" alt="Second slide">
+                </div>
+                <div class="carousel-item" style="height:27vw;object-fit:cover;">
+                    <img class="d-block w-100 carousel-img" src="https://tinyurl.com/2hawzzdd" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
         @if (!User.Identity.IsAuthenticated)
         {
 
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img id="carousel-img" class="d-block w-100" src="https://tinyurl.com/4dk3ebb2" alt="First slide">
-                    </div>
-                </div>
-            </div>
             <div class="text-wrap align-content-center" style="width: 100%">
                 <h1 id="greeting"></h1>
             </div>
@@ -28,19 +47,19 @@
                 @foreach (var item in Model.BookViewModels)
                 {
                     <div class="col-sm-4">
-                        <img class="card-img-top border-top border-right border-left" style="margin-top:10%; height: 60vh; object-fit:cover;"
+                        <img class="card-img-top border-top border-right border-left" style="margin-top:10%; height:65vh; object-fit:cover;"
                      src="@item.ImageUrl"
                      alt="image">
                         <div class="card-body text-left border-right border-left border-bottom">
-                            <a  asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="card-link book-title">
+                            <a asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="card-link book-title">
                                 <h2 class="card-title"> @item.Title</h2>
                             </a>
-                            <h5  class="card-text text-muted book-author">Author: @item.Author </h5>
+                            <h5 class="card-text text-muted book-author">Author: @item.Author </h5>
                             <h5 class="card-text text-muted book-price">Price: @item.Price VND</h5>
                             <div class="d-flex justify-content-around" style="margin-top:1rem;">
-                             <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info float-left cart-button">
-                                   <i class="bi bi-cart-plus-fill"></i> Buy now
-                             </a>
+                                <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info rounded-pill float-left cart-button">
+                                    <i class="bi bi-cart-plus-fill"></i> Buy now
+                                </a>
 
                             </div>
                         </div>
@@ -57,31 +76,24 @@
                 <p class="greeting-by-role">You are signed in as a @Role.CUSTOMER</p>
             </div>
 
-            <a asp-controller="CartBooks" asp-action="Index" class="btn btn-info">
-                Shopping Cart
-            </a>
-            <a asp-controller="Orders" asp-action="Index" class="btn btn-info">
-                View List of Previous Orders
-            </a>
-            
             <div class="row card-deck">
 
                 @foreach (var item in Model.BookViewModels)
                 {
                     <div class="col-sm-4">
-                        <img class="card-img-top border-top border-right border-left" style="margin-top:10%; height: 60vh; object-fit:cover;"
+                        <img class="card-img-top border-top border-right border-left" style="margin-top:10%; height:70vh; object-fit:cover;"
                      src="@item.ImageUrl"
                      alt="image">
                         <div class="card-body text-left border-right border-left border-bottom">
-                            <a  asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="card-link book-title">
+                            <a asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="card-link book-title">
                                 <h2 class="card-title"> @item.Title</h2>
                             </a>
-                            <h5  class="card-text text-muted book-author">Author: @item.Author </h5>
+                            <h5 class="card-text text-muted book-author">Author: @item.Author </h5>
                             <h5 class="card-text text-muted book-price">Price: @item.Price VND</h5>
                             <div class="d-flex justify-content-around" style="margin-top:1rem;">
-                             <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info float-left cart-button">
-                                   <i class="bi bi-cart-plus-fill"></i> Add to cart
-                             </a>
+                                <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info float-left cart-button">
+                                    <i class="bi bi-cart-plus-fill"></i> Add to cart
+                                </a>
 
                             </div>
                         </div>
@@ -92,8 +104,52 @@
             </div>
         }
         else if (User.IsInRole(Role.STOREOWNER))
+
         {
-            <h1>Welcome To The Page For Store Owner</h1>
+            <div class="text-wrap align-content-center" style="width: 100%;">
+                <h1 id="greeting"></h1>
+
+                <div class="d-flex justify-content-center">
+                    <div class="dropdown">
+                        <a style="font-size:2vw;"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                            <i class="bi bi-bell-fill"></i>
+                        </a>
+                        <table class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                            @foreach (var item in Model.Notifications)
+                            {
+                                <tr class="dropdown-item" style="width:50vw;">
+                                    @if (item.Decision == "APPROVED")
+                                    {
+
+                                        <td class="alert alert-success text-wrap " style="width:85%;">
+                                            <i class="bi bi-check-circle-fill"></i> Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
+                                        </td>
+                                        <td class="text-muted text-wrap text-cent" style="padding-left:2%;">@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="alert alert-danger text-wrap " style="width:85%;">
+                                            <i class="bi bi-x-circle-fill"></i> Your request for @item.Action the category "@item.CategoryName" has been <b>@item.Decision!</b>
+
+                                        </td>
+                                        <td class="text-muted text-wrap text-cent" style="padding-left:2%;">@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                       
+                    </div>
+                     <p class="greeting-by-role">You are signed in as a Store owner</p>
+                </div>
+                
+
+            </div>
+
             <a asp-controller="Books" asp-action="Index" class="btn btn-info">
                 Manage Books
             </a>
@@ -101,39 +157,13 @@
                 Manage Categories
             </a>
             <a asp-controller="Stores" asp-action="SearchUser" class="btn btn-info">
-                View List of Customers
+                List of Customers
             </a>
             <a asp-controller="Stores" asp-action="Index" class="btn btn-info">
-                View List of Customer Records
+                List of Customer Orders
             </a>
-            <div class="dropdown show">
-                <button id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-bell-fill" style="color:black; font-size:1.5vw;"></i>
-                </button>
-                <table class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    @foreach (var item in Model.Notifications)
-                    {
-                        <tr class="dropdown-item">
-                            @if (item.Decision == "APPROVED")
-                            {
-                                <td class="alert alert-info">
-                                    Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
 
-                                </td>
-                                <td>@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
-                            }
-                            else
-                            {
-                                <td class="alert alert-danger">
-                                    Your request for @item.Action the book category "@item.CategoryName" has been <b>@item.Decision!</b>
 
-                                </td>
-                                <td>@item.NotifiedAt.ToShortTimeString() @item.NotifiedAt.ToShortDateString()</td>
-                            }
-                        </tr>
-                    }
-                </table>
-            </div>
         }
         else if (User.IsInRole(Role.ADMIN))
         {
@@ -150,4 +180,3 @@
         }
     </div>
 </div>
-

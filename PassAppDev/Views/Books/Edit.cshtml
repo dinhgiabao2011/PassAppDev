@@ -6,55 +6,53 @@
 <h1>Edit a Books</h1>
 
 <form enctype="multipart/form-data" asp-controller="Books" asp-action="Edit" method="post">
-  <input asp-for="Book.Id" type="hidden" value="@Model.Book.Id" />
-  <div class="form-group">
-    <label>Title</label>
-    <input asp-for="Book.Title" class="form-control" placeholder="Title ..." />
-    <span asp-validation-for="Book.Title" class="text-danger"></span>
-  </div>
-  <div class="form-group">
-    <label>Author</label>
-    <input asp-for="Book.Author" class="form-control" placeholder="Author ..." />
-    <span asp-validation-for="Book.Author" class="text-danger"></span>
-  </div>
-  <div class="form-group">
-    <label>Price</label>
-    <input asp-for="Book.Price" class="form-control" placeholder="Price ..." />
-    <span asp-validation-for="Book.Price" class="text-danger"></span>
-  </div>
-  <div class="form-group">
-    <label>Description</label>
-    <input asp-for="Book.Description" class="form-control" placeholder="Description ..." />
-    <span asp-validation-for="Book.Description" class="text-danger"></span>
-  </div>
-  <div class="form-group">
-     <label>Category</label>
-     <select 
-        asp-for="Book.CategoryId" 
-        asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" 
-        class="form-control">
-     </select>
-  </div>
-  <div class="form-group">
-     <label>Current Image</label>
-      <img class="rounded" style="object-fit: cover; width:30%; height:40%;"
-        src="@ViewBag.ImageData" 
-        alt="image">
-   </div>
-   <div class="form-group">
+    <input asp-for="Book.Id" type="hidden" value="@Model.Book.Id" />
+    <div class="form-group">
+        <label>Title</label>
+        <input asp-for="Book.Title" class="form-control" placeholder="Title ..." />
+        <span asp-validation-for="Book.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Author</label>
+        <input asp-for="Book.Author" class="form-control" placeholder="Author ..." />
+        <span asp-validation-for="Book.Author" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input asp-for="Book.Price" class="form-control" placeholder="Price ..." />
+        <span asp-validation-for="Book.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input asp-for="Book.Description" class="form-control" placeholder="Description ..." />
+        <span asp-validation-for="Book.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <select asp-for="Book.CategoryId"
+                asp-items="@(new SelectList(Model.Categories, "Id", "Name"))"
+                class="form-control">
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Current Image</label>
+        <img class="form-control rounded" style=" height:60%; width: 40%; object-fit: contain; border: none;"
+             src="@ViewBag.ImageData"
+             alt="image">
+    </div>
+    <div class="form-group">
         <label>New Image</label>
         <dl>
-        <dt>
-            <label asp-for="@Model.FormFile"></label>
-        </dt>
-        <dd>
-            <input asp-for="@Model.FormFile" type="file">
-        </dd>
-    </dl>
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Edit</button>
-  </div>
+            <dt>
+                <label asp-for="@Model.FormFile"><i class="bi bi-file-earmark-arrow-up-fill"></i>Upload</label>
+            </dt>
+            <dd>
+                <input asp-for="@Model.FormFile" type="file">
+            </dd>
+        </dl>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </div>
 </form>
 
-     

@@ -209,7 +209,7 @@ namespace PassAppDev.Controllers
 			
 			_context.SaveChanges();
 
-			return RedirectToAction("StoreOwner");
+			return RedirectToAction("StoreOwners");
 		}
 	}
 }
