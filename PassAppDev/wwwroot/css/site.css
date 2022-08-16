@@ -80,47 +80,110 @@ body {
     #greeting::before {
         content: "Welcome to FPT Book Store";
         font-size: 4vw;
-        font-weight: 800;
+        font-weight: 700;
         font-family: 'PT Sans', sans-serif;
-        animation: animateAbove 1 1.2s;
         padding-left: 10px;
+        animation: animateAbove 1 1.5s;
+        color: #034ea2;
     }
 
+ 
+       
 @keyframes animateAbove {
+    5% {
+        content: "W\220E";
+        
+    }
+
     10% {
-        content: "\178\2665ll\21B9\2292 \2948\2931\20A9 \21D1\2211 \220B\C6\21B9 \220E\203B\2297\A3";
+        content: "We\220E";
+        
+    }
+    15% {
+        content: "Wel\220E";
+        
     }
 
     20% {
-        content: "\2665ll\21B9\2292 \2931\20A9 \21D1\2211 \220B\C6\21B9 \203B\2297\A3";
+        content: "Welc\220E";
+        
+    }
+
+    25% {
+        content: "Welco\220E";
+        
     }
 
     30% {
-        content: "W\2665ll\21B9\2292 t\2931\20A9 F\21D1\2211 B\220B\C6\21B9 St\203B\2297\A3";
+        content: "Welcom\220E";
+        
+    }
+
+    35% {
+        content: "Welcome\220E";
+       
     }
 
     40% {
-        content: "W\21B9\2292 t\2931\20A9 F\21D1 B\220B\C6\21B9 St\203B\2297";
+        content: "Welcome t\220E";
+       
     }
 
+    45% {
+        content: "Welcome to\220E";
+        
+    }
+
+    50% {
+        content: "Welcome to \220E";
+        
+    }
+    55% {
+        content: "Welcome to F\220E";
+       
+    }
     60% {
-        content: "We\21B9c\2292 t\2931\20A9 FP\21D1 Bo\220B\C6\21B9 St\203B\2297";
+        content: "Welcome to FP\220E";
+        
+    }
+    65% {
+        content: "Welcome to FPT\220E";
+       
     }
 
     70% {
-        content: "We\21B9co t\2931 FP\21D1 Bo\220B\C6 St\203B\2297";
+        content: "Welcome to FPT \220E";
+        
+    }
+
+    75% {
+        content: "Welcome to FPT B\220E";
+       
     }
 
     80% {
-        content: "Wel\21B9co t\2931 FP\21D1 Bo\220B\C6k St\203B\2297e";
+        content: "Welcome to FPT Bo\220E";
+        
+    }
+
+    85% {
+        content: "Welcome to FPT Boo\220E";
+        
     }
 
     90% {
-        content: "Wel\21B9com t FP\21D1 Bo\220Bk St\203Be";
+        content: "Welcome to FPT Book \220E";
+        
+    }
+
+    95% {
+        content: "Welcome to FPT Book St\220E";
+       
     }
 
     100% {
-        content: "Welcome to FP\21D1 Book St\203Be";
+        content: "Welcome to FPT Book Stor\220E";
+       
     }
 }
 
@@ -141,7 +204,12 @@ body {
   margin: 7% 0 7% 0%;
 }
 
+.btn-info {
+    background-color: #034ea2;
+    border-color: #034ea2;
+}
 .btn-info:hover {
+    font-size:1.1rem;
     background-color: #F06E28;
     border-color: #F06E28;
 }
@@ -149,14 +217,21 @@ body {
 .cart-button {  
     font-size: 20px;
     margin-top: 5%;
-    margin-right:55%;
+  
 }
-/*.card-body {
-    border-radius: 0 0 8px 8px;
-    border-color: #2D3791;
-    border-style: solid;
+.card-body {
+    border-radius: 0 0 16px 16px;
+
 }
-card-img-top {
-    border-color: #2D3791;
-    border-style: solid;
-}*/
+.greeting-by-role {
+    font-size: 2vw;
+    font-weight: 500;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.faq-title {
+    font-size: 3vw;
+    font-weight: 700;
+    font-family: 'PT Sans', sans-serif;
+    color: #034ea2;
+}
