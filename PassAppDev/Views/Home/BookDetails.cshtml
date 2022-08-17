@@ -9,7 +9,7 @@
         <a asp-controller="Home" asp-action="BookDetails" asp-route-id=@Model.Id class="card-link book-title">
             <h2 class="card-title"> @Model.Title</h2>
         </a>
-        <p class="card-text">@Model.Description</p>
+        <p class="card-text text-wrap text-justify">@Model.Description</p>
         <h5 class="card-text book-author">Author: @Model.Author </h5>
         <h5 class="card-text book-author">Category: @Model.Category.Name </h5>
         <h5 class="card-text book-price">Price: @Model.Price VND</h5>
@@ -24,7 +24,7 @@
 </div>
 <div class="form-group">
     <a style="margin-top:5%; margin-left: 2%;" asp-controller="Home" asp-action="Index" class="btn btn-danger">
-        Back to Index
+        Back
     </a>
 </div>
 

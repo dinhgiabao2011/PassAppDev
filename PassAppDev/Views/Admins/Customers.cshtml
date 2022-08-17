@@ -23,7 +23,11 @@
 				<td class="text-center">@item.Address</td>
 				<td class="text-center"><a asp-controller="Admins" asp-action="ChangeCustomerPassword" asp-route-id=@item.Id class="btn btn-primary"> 
 				 <i class="bi bi-pencil-square"></i> Change Password
+				</a>
+				<a asp-controller="Admins" asp-action="DeleteCustomer" asp-route-id=@item.Id class="btn btn-danger"> 
+				 <i class="bi bi-trash"></i> Remove
 				</a></td>
+				
 			</tr>
 		}
 

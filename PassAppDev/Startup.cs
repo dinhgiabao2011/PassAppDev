@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -15,11 +16,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Optimization;
 
 namespace PassAppDev
 {
 	public class Startup
 	{
+		
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -32,7 +35,7 @@ namespace PassAppDev
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
 					options.UseSqlServer(
-							Configuration.GetConnectionString("DefaultConnection")));
+							Configuration.GetConnectionString("DeployConnection")));
 			services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 				.AddRoles<IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>();
@@ -40,6 +43,7 @@ namespace PassAppDev
 			services.AddRazorPages();
 		}
 
+		
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
@@ -56,6 +60,7 @@ namespace PassAppDev
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+			
 
 			app.UseRouting();
 

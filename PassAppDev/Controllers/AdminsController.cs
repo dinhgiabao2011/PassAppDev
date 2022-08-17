@@ -134,6 +134,18 @@ namespace PassAppDev.Controllers
 		}
 
 		[HttpGet]
+		public IActionResult DeleteCustomer(string id) {
+			var userInDb = _context.ApplicationUsers.SingleOrDefault(t => t.Id.Equals(id));
+			if (userInDb is null)
+			{
+				return NotFound();
+			}
+			_context.ApplicationUsers.Remove(userInDb);
+			_context.SaveChanges();
+			return RedirectToAction("Customers");
+		}
+
+		[HttpGet]
 		public IActionResult StoreOwners()
 		{
 			var storeOwner = _userManager.GetUsersInRoleAsync(Role.STOREOWNER).Result;
