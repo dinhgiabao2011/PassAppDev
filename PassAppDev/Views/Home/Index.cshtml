@@ -86,11 +86,11 @@
                      alt="image">
                         <div class="card-body text-left border-right border-left border-bottom">
                             <a asp-controller="Home" asp-action="BookDetails" asp-route-id=@item.Id class="card-link book-title">
-                                <h2 class="card-title"> @item.Title</h2>
+                                <h3 class="card-title"> @item.Title</h3>
                             </a>
                             <h5 class="card-text text-muted book-author">Author: @item.Author </h5>
                             <h5 class="card-text text-muted book-price">Price: @item.Price VND</h5>
-                            <div class="d-flex justify-content-around" style="margin-top:1rem;">
+                            <div class="d-flex justify-content-around">
                                 <a asp-controller="CartBooks" asp-action="AddToCart" asp-route-id=@item.Id class="btn btn-info float-left cart-button">
                                     <i class="bi bi-cart-plus-fill"></i> Add to cart
                                 </a>
@@ -167,7 +167,10 @@
         }
         else if (User.IsInRole(Role.ADMIN))
         {
-            <h1>Welcome To The Page For Administrator</h1>
+             <div class="text-wrap align-content-center" style="width: 100%;">
+                <h1 id="greeting"></h1>
+                <p class="greeting-by-role">You are signing in as an Administrator</p>
+            </div>
             <a asp-controller="Admins" asp-action="Customers" class="btn btn-info">
                 Manage Customers
             </a>
